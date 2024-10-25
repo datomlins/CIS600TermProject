@@ -3,22 +3,12 @@ title: "Data Analysis"
 output: html_notebook
 ---
 
-Install necessary packages.
-
-```{r}
-install.packages("readr")
-install.packages("data.table")
-
-# In case we use neural networks (we probably will). Not including because the
-#  library is quite large.
-# install.packages("keras") 
-# install_keras()
-
-```
-
 Import necessary libraries.
 
 ```{r}
+
+# install_keras() - don't want to install keras until we've determined
+# we want to use it because keras is quite large.
 
 library(readr)
 library(data.table)
@@ -30,15 +20,16 @@ library(data.table)
 Then, we can import the data.
 
 ```{r}
-onlineShopperData <- read.csv("data/online_shoppers_intention.csv")
+onlineShopperData <- fread("data/online_shoppers_intention.csv")
 ```
 
 
-Data is easier to manipulate in the data.table library, so we'll convert it to a Data Table.
 
 ```{r}
 setDT(onlineShopperData)
 ```
+
+
 
 *** TODO *** Write documentation for the data
 
