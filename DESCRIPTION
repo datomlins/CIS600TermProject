@@ -1,0 +1,9 @@
+Package: TermDataAnalysis
+Version: 1.0
+Date: 2024-10-24
+Depends:
+Imports:
+Title: CIS 600 Term Project
+Authors: Karthiga Gujuluva Ravichandran, Trent Reeves, David Tomlinson
+Description: All of the code necessary to perform the data analysis for the CIS 600 term project.
+RoxygenNote: 7.3.2

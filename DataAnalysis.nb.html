@@ -1752,68 +1752,37 @@ display: none;
 
 
 <!-- rnb-text-begin -->
-<p>Before doing any data analysis, we need to be able to import our
-data. To do that we need to install “readr”. This will let us import the
-data from the csv.</p>
+<p>Import necessary libraries.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaW5zdGFsbC5wYWNrYWdlcyhcInJlYWRyXCIpXG5gYGAifQ== -->
-<pre class="r"><code>install.packages(&quot;readr&quot;)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5saWJyYXJ5KHJlYWRyKVxubGlicmFyeShkYXRhLnRhYmxlKVxuIyBsaWJyYXJ5KGtlcmFzKVxuXG5cbmBgYCJ9 -->
+<pre class="r"><code>
+library(readr)
+library(data.table)
+# library(keras)
+</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gaW5zdGFsbC5wYWNrYWdlcyA6IFVwZGF0aW5nIGxvYWRlZCBwYWNrYWdlc1xuIn0= -->
-<pre><code>Error in install.packages : Updating loaded packages</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShyZWFkcilcblxuJyBcbkluIGNhc2Ugd2UgdXNlIG5ldXJhbCBuZXR3b3JrcyAod2UgcHJvYmFibHkgd2lsbCkuIE5vdCBpbmNsdWRpbmcgYmVjYXVzZSB0aGVcbiAgbGlicmFyeSBpcyBxdWl0ZSBsYXJnZS5cbmluc3RhbGwucGFja2FnZXMoXCJrZXJhc1wiKVxuaW5zdGFsbF9rZXJhcygpXG5saWJyYXJ5KGtlcmFzKVxuJ1xuYGBgIn0= -->
-<pre class="r"><code>library(readr)
-
-&#39; 
-In case we use neural networks (we probably will). Not including because the
-  library is quite large.
-install.packages(&quot;keras&quot;)
-install_keras()
-library(keras)
-&#39;</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiIFxcbkluIGNhc2Ugd2UgdXNlIG5ldXJhbCBuZXR3b3JrcyAod2UgcHJvYmFibHkgd2lsbCkuIE5vdCBpbmNsdWRpbmcgYmVjYXVzZSB0aGVcXG4gIGxpYnJhcnkgaXMgcXVpdGUgbGFyZ2UuXFxuaW5zdGFsbC5wYWNrYWdlcyhcXFwia2VyYXNcXFwiKVxcbmluc3RhbGxfa2VyYXMoKVxcbmxpYnJhcnkoa2VyYXMpXFxuXCJcbiJ9 -->
-<pre><code>[1] &quot; \nIn case we use neural networks (we probably will). Not including because the\n  library is quite large.\ninstall.packages(\&quot;keras\&quot;)\ninstall_keras()\nlibrary(keras)\n&quot;</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Then, we can import the data.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxub25saW5lU2hvcHBlckRhdGEgPC0gcmVhZC5jc3YoXCJkYXRhL29ubGluZV9zaG9wcGVyc19pbnRlbnRpb24uY3N2XCIpXG5gYGAifQ== -->
-<pre class="r"><code>onlineShopperData &lt;- read.csv(&quot;data/online_shoppers_intention.csv&quot;)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxub25saW5lU2hvcHBlckRhdGEgPC0gZnJlYWQoXCJkYXRhL29ubGluZV9zaG9wcGVyc19pbnRlbnRpb24uY3N2XCIpXG5gYGAifQ== -->
+<pre class="r"><code>onlineShopperData &lt;- fread(&quot;data/online_shoppers_intention.csv&quot;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>This is an <a href="http://rmarkdown.rstudio.com">R Markdown</a>
-Notebook. When you execute code within the notebook, the results appear
-beneath the code.</p>
-<p>Try executing this chunk by clicking the <em>Run</em> button within
-the chunk or by placing your cursor inside it and pressing
-<em>Ctrl+Shift+Enter</em>.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxvdChjYXJzKVxuYGBgIn0= -->
-<pre class="r"><code>plot(cars)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2V0RFQob25saW5lU2hvcHBlckRhdGEpXG5gYGAifQ== -->
+<pre class="r"><code>setDT(onlineShopperData)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Add a new chunk by clicking the <em>Insert Chunk</em> button on the
-toolbar or by pressing <em>Ctrl+Alt+I</em>.</p>
-<p>When you save the notebook, an HTML file containing the code and
-output will be saved alongside it (click the <em>Preview</em> button or
-press <em>Ctrl+Shift+K</em> to preview the HTML file).</p>
-<p>The preview shows you a rendered HTML copy of the contents of the
-editor. Consequently, unlike <em>Knit</em>, <em>Preview</em> does not
-run any R code chunks. Instead, the output of the chunk when it was last
-run in the editor is displayed.</p>
-<p>*** TODO *** Write documentation for the data *** TODO *** fix the
-file structure for an R project</p>
+<p>*** TODO *** Write documentation for the data</p>
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkRhdGEgQW5hbHlzaXMiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpCZWZvcmUgZG9pbmcgYW55IGRhdGEgYW5hbHlzaXMsIHdlIG5lZWQgdG8gYmUgYWJsZSB0byBpbXBvcnQgb3VyIGRhdGEuIFRvIGRvIA0KdGhhdCB3ZSBuZWVkIHRvIGluc3RhbGwgInJlYWRyIi4gVGhpcyB3aWxsIGxldCB1cyBpbXBvcnQgdGhlIGRhdGEgZnJvbSB0aGUgY3N2Lg0KDQpgYGB7cn0NCmluc3RhbGwucGFja2FnZXMoInJlYWRyIikNCmxpYnJhcnkocmVhZHIpDQoNCicgDQpJbiBjYXNlIHdlIHVzZSBuZXVyYWwgbmV0d29ya3MgKHdlIHByb2JhYmx5IHdpbGwpLiBOb3QgaW5jbHVkaW5nIGJlY2F1c2UgdGhlDQogIGxpYnJhcnkgaXMgcXVpdGUgbGFyZ2UuDQppbnN0YWxsLnBhY2thZ2VzKCJrZXJhcyIpDQppbnN0YWxsX2tlcmFzKCkNCmxpYnJhcnkoa2VyYXMpDQonDQoNCmBgYA0KDQpUaGVuLCB3ZSBjYW4gaW1wb3J0IHRoZSBkYXRhLg0KDQpgYGB7cn0NCm9ubGluZVNob3BwZXJEYXRhIDwtIHJlYWQuY3N2KCJkYXRhL29ubGluZV9zaG9wcGVyc19pbnRlbnRpb24uY3N2IikNCmBgYA0KDQpUaGlzIGlzIGFuIFtSIE1hcmtkb3duXShodHRwOi8vcm1hcmtkb3duLnJzdHVkaW8uY29tKSBOb3RlYm9vay4gV2hlbiB5b3UgZXhlY3V0ZSBjb2RlIHdpdGhpbiB0aGUgbm90ZWJvb2ssIHRoZSByZXN1bHRzIGFwcGVhciBiZW5lYXRoIHRoZSBjb2RlLiANCg0KVHJ5IGV4ZWN1dGluZyB0aGlzIGNodW5rIGJ5IGNsaWNraW5nIHRoZSAqUnVuKiBidXR0b24gd2l0aGluIHRoZSBjaHVuayBvciBieSBwbGFjaW5nIHlvdXIgY3Vyc29yIGluc2lkZSBpdCBhbmQgcHJlc3NpbmcgKkN0cmwrU2hpZnQrRW50ZXIqLiANCg0KYGBge3J9DQpwbG90KGNhcnMpDQpgYGANCg0KQWRkIGEgbmV3IGNodW5rIGJ5IGNsaWNraW5nIHRoZSAqSW5zZXJ0IENodW5rKiBidXR0b24gb24gdGhlIHRvb2xiYXIgb3IgYnkgcHJlc3NpbmcgKkN0cmwrQWx0K0kqLg0KDQpXaGVuIHlvdSBzYXZlIHRoZSBub3RlYm9vaywgYW4gSFRNTCBmaWxlIGNvbnRhaW5pbmcgdGhlIGNvZGUgYW5kIG91dHB1dCB3aWxsIGJlIHNhdmVkIGFsb25nc2lkZSBpdCAoY2xpY2sgdGhlICpQcmV2aWV3KiBidXR0b24gb3IgcHJlc3MgKkN0cmwrU2hpZnQrSyogdG8gcHJldmlldyB0aGUgSFRNTCBmaWxlKS4NCg0KVGhlIHByZXZpZXcgc2hvd3MgeW91IGEgcmVuZGVyZWQgSFRNTCBjb3B5IG9mIHRoZSBjb250ZW50cyBvZiB0aGUgZWRpdG9yLiBDb25zZXF1ZW50bHksIHVubGlrZSAqS25pdCosICpQcmV2aWV3KiBkb2VzIG5vdCBydW4gYW55IFIgY29kZSBjaHVua3MuIEluc3RlYWQsIHRoZSBvdXRwdXQgb2YgdGhlIGNodW5rIHdoZW4gaXQgd2FzIGxhc3QgcnVuIGluIHRoZSBlZGl0b3IgaXMgZGlzcGxheWVkLg0KDQoqKiogVE9ETyAqKiogV3JpdGUgZG9jdW1lbnRhdGlvbiBmb3IgdGhlIGRhdGENCioqKiBUT0RPICoqKiBmaXggdGhlIGZpbGUgc3RydWN0dXJlIGZvciBhbiBSIHByb2plY3QNCg0K</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkRhdGEgQW5hbHlzaXMiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpJbXBvcnQgbmVjZXNzYXJ5IGxpYnJhcmllcy4NCg0KYGBge3J9DQoNCiMgaW5zdGFsbF9rZXJhcygpIC0gZG9uJ3Qgd2FudCB0byBpbnN0YWxsIGtlcmFzIHVudGlsIHdlJ3ZlIGRldGVybWluZWQNCiMgd2Ugd2FudCB0byB1c2UgaXQgYmVjYXVzZSBrZXJhcyBpcyBxdWl0ZSBsYXJnZS4NCg0KbGlicmFyeShyZWFkcikNCmxpYnJhcnkoZGF0YS50YWJsZSkNCiMgbGlicmFyeShrZXJhcykNCg0KDQpgYGANCg0KVGhlbiwgd2UgY2FuIGltcG9ydCB0aGUgZGF0YS4NCg0KYGBge3J9DQpvbmxpbmVTaG9wcGVyRGF0YSA8LSBmcmVhZCgiZGF0YS9vbmxpbmVfc2hvcHBlcnNfaW50ZW50aW9uLmNzdiIpDQpgYGANCg0KDQoNCmBgYHtyfQ0Kc2V0RFQob25saW5lU2hvcHBlckRhdGEpDQpgYGANCg0KDQoNCioqKiBUT0RPICoqKiBXcml0ZSBkb2N1bWVudGF0aW9uIGZvciB0aGUgZGF0YQ0KDQo=</div>
 
 
 
