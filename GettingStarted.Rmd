@@ -1,0 +1,13 @@
+---
+title: "Getting Started"
+output: html_notebook
+---
+
+Import necessary libraries.
+
+```{r}
+install.packages("readr")
+install.packages("data.table")
+install.packages("devtools")
+install.packages("roxygen2")
+```
