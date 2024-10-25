@@ -23,7 +23,7 @@ library(keras)
 Then, we can import the data.
 
 ```{r}
-onlineShopperData <- read.csv("online_shoppers_intention.csv")
+onlineShopperData <- read.csv("data/online_shoppers_intention.csv")
 ```
 
 This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
