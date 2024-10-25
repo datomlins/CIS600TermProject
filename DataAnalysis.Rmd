@@ -3,20 +3,27 @@ title: "Data Analysis"
 output: html_notebook
 ---
 
-Before doing any data analysis, we need to be able to import our data. To do 
-that we need to install "readr". This will let us import the data from the csv.
+Install necessary packages.
 
 ```{r}
 install.packages("readr")
-library(readr)
+install.packages("data.table")
 
-' 
-In case we use neural networks (we probably will). Not including because the
-  library is quite large.
-install.packages("keras")
-install_keras()
-library(keras)
-'
+# In case we use neural networks (we probably will). Not including because the
+#  library is quite large.
+# install.packages("keras") 
+# install_keras()
+
+```
+
+Import necessary libraries.
+
+```{r}
+
+library(readr)
+library(data.table)
+# library(keras)
+
 
 ```
 
@@ -27,10 +34,11 @@ onlineShopperData <- read.csv("data/online_shoppers_intention.csv")
 ```
 
 
+Data is easier to manipulate in the data.table library, so we'll convert it to a Data Table.
+
 ```{r}
-onlineShopperData
+setDT(onlineShopperData)
 ```
 
 *** TODO *** Write documentation for the data
-*** TODO *** fix the file structure for an R project
 
