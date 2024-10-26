@@ -1755,11 +1755,22 @@ display: none;
 <p>Import necessary libraries.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5saWJyYXJ5KHJlYWRyKVxubGlicmFyeShkYXRhLnRhYmxlKVxuIyBsaWJyYXJ5KGtlcmFzKVxuXG5cbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIGluc3RhbGxfa2VyYXMoKSAtIGRvbid0IHdhbnQgdG8gaW5zdGFsbCBrZXJhcyB1bnRpbCB3ZSd2ZSBkZXRlcm1pbmVkXG4jIHdlIHdhbnQgdG8gdXNlIGl0IGJlY2F1c2Uga2VyYXMgaXMgcXVpdGUgbGFyZ2UuXG5cbmxpYnJhcnkocmVhZHIpXG5saWJyYXJ5KGRhdGEudGFibGUpXG5gYGAifQ== -->
 <pre class="r"><code>
+# install_keras() - don&#39;t want to install keras until we&#39;ve determined
+# we want to use it because keras is quite large.
+
 library(readr)
-library(data.table)
-# library(keras)
+library(data.table)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUmVnaXN0ZXJlZCBTMyBtZXRob2Qgb3ZlcndyaXR0ZW4gYnkgJ2RhdGEudGFibGUnOlxuICBtZXRob2QgICAgICAgICAgIGZyb21cbiAgcHJpbnQuZGF0YS50YWJsZSAgICAgXG5kYXRhLnRhYmxlIDEuMTYuMiB1c2luZyA4IHRocmVhZHMgKHNlZSA/Z2V0RFR0aHJlYWRzKS4gIExhdGVzdCBuZXdzOiByLWRhdGF0YWJsZS5jb21cbiJ9 -->
+<pre><code>Registered S3 method overwritten by &#39;data.table&#39;:
+  method           from
+  print.data.table     
+data.table 1.16.2 using 8 threads (see ?getDTthreads).  Latest news: r-datatable.com</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBsaWJyYXJ5KGtlcmFzKVxuXG5cbmBgYCJ9 -->
+<pre class="r"><code># library(keras)
 </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -1772,17 +1783,10 @@ library(data.table)
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2V0RFQob25saW5lU2hvcHBlckRhdGEpXG5gYGAifQ== -->
-<pre class="r"><code>setDT(onlineShopperData)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
 <p>*** TODO *** Write documentation for the data</p>
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkRhdGEgQW5hbHlzaXMiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpJbXBvcnQgbmVjZXNzYXJ5IGxpYnJhcmllcy4NCg0KYGBge3J9DQoNCiMgaW5zdGFsbF9rZXJhcygpIC0gZG9uJ3Qgd2FudCB0byBpbnN0YWxsIGtlcmFzIHVudGlsIHdlJ3ZlIGRldGVybWluZWQNCiMgd2Ugd2FudCB0byB1c2UgaXQgYmVjYXVzZSBrZXJhcyBpcyBxdWl0ZSBsYXJnZS4NCg0KbGlicmFyeShyZWFkcikNCmxpYnJhcnkoZGF0YS50YWJsZSkNCiMgbGlicmFyeShrZXJhcykNCg0KDQpgYGANCg0KVGhlbiwgd2UgY2FuIGltcG9ydCB0aGUgZGF0YS4NCg0KYGBge3J9DQpvbmxpbmVTaG9wcGVyRGF0YSA8LSBmcmVhZCgiZGF0YS9vbmxpbmVfc2hvcHBlcnNfaW50ZW50aW9uLmNzdiIpDQpgYGANCg0KDQoNCmBgYHtyfQ0Kc2V0RFQob25saW5lU2hvcHBlckRhdGEpDQpgYGANCg0KDQoNCioqKiBUT0RPICoqKiBXcml0ZSBkb2N1bWVudGF0aW9uIGZvciB0aGUgZGF0YQ0KDQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkRhdGEgQW5hbHlzaXMiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpJbXBvcnQgbmVjZXNzYXJ5IGxpYnJhcmllcy4NCg0KYGBge3J9DQoNCiMgaW5zdGFsbF9rZXJhcygpIC0gZG9uJ3Qgd2FudCB0byBpbnN0YWxsIGtlcmFzIHVudGlsIHdlJ3ZlIGRldGVybWluZWQNCiMgd2Ugd2FudCB0byB1c2UgaXQgYmVjYXVzZSBrZXJhcyBpcyBxdWl0ZSBsYXJnZS4NCg0KbGlicmFyeShyZWFkcikNCmxpYnJhcnkoZGF0YS50YWJsZSkNCiMgbGlicmFyeShrZXJhcykNCg0KDQpgYGANCg0KVGhlbiwgd2UgY2FuIGltcG9ydCB0aGUgZGF0YS4NCg0KYGBge3J9DQpvbmxpbmVTaG9wcGVyRGF0YSA8LSBmcmVhZCgiZGF0YS9vbmxpbmVfc2hvcHBlcnNfaW50ZW50aW9uLmNzdiIpDQpgYGANCg0KDQoNCioqKiBUT0RPICoqKiBXcml0ZSBkb2N1bWVudGF0aW9uIGZvciB0aGUgZGF0YQ0KDQo=</div>
 
 
 

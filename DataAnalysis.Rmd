@@ -25,11 +25,5 @@ onlineShopperData <- fread("data/online_shoppers_intention.csv")
 
 
 
-```{r}
-setDT(onlineShopperData)
-```
-
-
-
 *** TODO *** Write documentation for the data
 
