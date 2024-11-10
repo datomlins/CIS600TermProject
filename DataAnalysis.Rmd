@@ -24,6 +24,28 @@ onlineShopperData <- fread("data/online_shoppers_intention.csv")
 ```
 
 
+Pre-process the data
 
-*** TODO *** Write documentation for the data
+Build models identical to Sakar
+
+Compare results
+
+Use oversampling
+
+Reconstruct models
+
+Compare
+
+If time use SMOTE?
+
+Reconstruct models
+
+Compare
+
+Significantly reduce the size of the training set
+
+Rebuild the models 
+
+Compare
+
 
