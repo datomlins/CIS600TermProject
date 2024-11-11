@@ -26,7 +26,7 @@ onlineShopperData <- fread("data/online_shoppers_intention.csv")
 
 Pre-process the data
 
-Build models identical to Sakar
+Build models identical to Sakar, but on our preprocessed version of the data
 
 Compare results
 
