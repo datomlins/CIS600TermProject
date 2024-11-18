@@ -23,28 +23,35 @@ stripUseless <- function(theTable, ...) {
   theTable[, (...) := NULL]
 }
 
-#' proportionalizeTime
+#' proportionalize
 #' 
 #' @description
 #' Takes the provided columns and collapses them into one column which is 
 #' the proportion of the time spent in the selected category
 #' 
 #' @examples
-#' proportionalizeTime(funtime, seriousTime, funTime)
+#' proportionalize(funTable, funtime, seriousTime, funTime)
 #' 
+#' @param theTable The table whose columns are being manipulated
 #' @param priCol The column which will be the one the output column
 #'               will be the proportion of
 #' @param cols   The columns being aggregated
 #' 
-#' @returns The aggregated column
+#' @returns The table with its columns aggregated
 #' 
 #' @import data.table
 #' 
 #' @export
-proportionalizeTime(priCol, ...) {
+proportionalize <- function(theTable, priCol, ...) {
+  # need to generalize the provided columns for use in the summation @TODO
+  columns <- (...)
   # sum the columns of interest
+  theTable <- theTable[, total_Duration := Administrative_Duration + Informational_Duration + ProductRelated_Duration]
+  
   # divide the priCol by the sum for each row
+  theTable <- theTable[, proportion_of_duration := ProductRelated_Duration / total_Duration
+                       ]
   # strip the columns that were combined
-  # add the column that we calculated
-  # return the table
+  theTable <- stripUseless(theTable, columns)
+
 }
