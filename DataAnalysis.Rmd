@@ -12,6 +12,7 @@ Import necessary libraries.
 
 library(readr)
 library(data.table)
+library(TermDataAnalysis)
 # library(keras)
 
 
@@ -21,10 +22,24 @@ Then, we can import the data.
 
 ```{r}
 onlineShopperData <- fread("data/online_shoppers_intention.csv")
+data_processed <- copy(onlineShopperData)
 ```
 
 
 Pre-process the data
+```{r}
+
+# First we trim the columns we don't need at all
+data_processed <- stripUseless(onlineShopperData, c("OperatingSystems", 
+                    "Browser", "Administrative", "Informational", 
+                    "ProductRelated"))
+
+# Then we combine the columsn that we think we can combine
+# WARNING: The generalization for this function isn't set up yet TODO
+data_processed <- proportionalize(onlineShopperData, "ProductRelated_Duration", c("Administrative_Duration", "Informational_Duration", "ProductRelated_Duration"))
+
+```
+
 
 Build models identical to Sakar, but on our preprocessed version of the data
 
