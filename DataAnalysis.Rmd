@@ -36,12 +36,24 @@ data_processed <- stripUseless(onlineShopperData, c("OperatingSystems",
 
 # Then we combine the columsn that we think we can combine
 # WARNING: The generalization for this function isn't set up yet TODO
-data_processed <- proportionalize(onlineShopperData, "ProductRelated_Duration", c("Administrative_Duration", "Informational_Duration", "ProductRelated_Duration"))
+data_processed <- proportionalize(onlineShopperData, "ProductRelated_Duration", 
+                    c("Administrative_Duration", "Informational_Duration", 
+                      "ProductRelated_Duration"))
 
 ```
 
 
 Build models identical to Sakar, but on our preprocessed version of the data
+We need to try building 
+1. MultiLayer Perceptron
+2. SVM
+3. Decision Trees
+```{r}
+
+
+
+
+```
 
 Compare results
 
