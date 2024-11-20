@@ -36,9 +36,9 @@ data_processed <- stripUseless(onlineShopperData, c("OperatingSystems",
 
 # Then we combine the columsn that we think we can combine
 # WARNING: The generalization for this function isn't set up yet TODO
-data_processed <- proportionalize(onlineShopperData, "ProductRelated_Duration", 
-                    c("Administrative_Duration", "Informational_Duration", 
-                      "ProductRelated_Duration"))
+data_processed <- proportionalize(onlineShopperData, quote(ProductRelated_Duration), 
+                    quote(Administrative_Duration), quote(Informational_Duration), 
+                      quote(ProductRelated_Duration))
 
 ```
 

@@ -44,7 +44,7 @@ stripUseless <- function(theTable, ...) {
 #' @export
 proportionalize <- function(theTable, priCol, ...) {
   # need to generalize the provided columns for use in the summation @TODO
-  columns <- (...)
+  columns <- quote(list(...))
   # sum the columns of interest
   theTable <- theTable[, total_Duration := Administrative_Duration + Informational_Duration + ProductRelated_Duration]
   
@@ -54,4 +54,24 @@ proportionalize <- function(theTable, priCol, ...) {
   # strip the columns that were combined
   theTable <- stripUseless(theTable, columns)
 
+}
+
+#' makeNiceList
+#' 
+#' @description
+#' Takes a gross variable length list and converts it into a nice one for use
+#' in proportionalize
+#' 
+#' @examples
+#' makeNiceList(theColumnsVariableFromProportionalize)
+#' 
+#' @param grossList the grossly formated list
+#' 
+#' @returns a list of symbols that aren't themselves also lists.
+#' 
+makeNiceList <- function(grossList){
+  result <- list()
+  for (val in grossList) {
+  
+  }
 }
