@@ -13,7 +13,10 @@ Import necessary libraries.
 library(readr)
 library(data.table)
 library(TermDataAnalysis)
-# library(keras)
+library(keras)
+library(parsnip)
+library(tidyverse)
+library(modeldata)
 
 
 ```
@@ -36,9 +39,13 @@ data_processed <- stripUseless(onlineShopperData, c("OperatingSystems",
 
 # Then we combine the columsn that we think we can combine
 # WARNING: The generalization for this function isn't set up yet TODO
-data_processed <- proportionalize(onlineShopperData, quote(ProductRelated_Duration), 
-                    quote(Administrative_Duration), quote(Informational_Duration), 
-                      quote(ProductRelated_Duration))
+data_processed <- proportionalize(onlineShopperData, c("ProductRelated_Duration",
+                      "Administrative_Duration", "Informational_Duration", 
+                      "ProductRelated_Duration"))
+
+data_processed <- data_processed[, c(
+                      "Administrative_Duration", "Informational_Duration", 
+                      "ProductRelated_Duration") := NULL]
 
 ```
 
@@ -48,8 +55,35 @@ We need to try building
 1. MultiLayer Perceptron
 2. SVM
 3. Decision Trees
+
+Initially, we'll split the data into 70% training set and 30% validation, just like
+in Sakar.
+
 ```{r}
 
+# source for examples https://www.r-bloggers.com/2024/09/how-to-split-a-data-frame-in-r-a-comprehensive-guide-for-beginners/
+set.seed(123)
+
+sample_size <- floor(0.7 * nrow(data_processed))
+train_indices <- sample(seq_len(nrow(data_processed)), size = sample_size)
+
+train_data <- data_processed[train_indices,]
+test_data <- data_processed[-train_indices,]
+
+
+```
+
+
+1. Multilayer Perceptron
+```{r}
+
+# Make a simple mlp
+
+mlp1 <- parsnip::mlp() %>%
+  parsnip::set_engine("keras") %>%
+  parsnip::set_mode("classification")
+
+update(mlp1, hidden_units = 10)
 
 
 
