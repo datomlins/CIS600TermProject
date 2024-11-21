@@ -1755,20 +1755,18 @@ display: none;
 <p>Import necessary libraries.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIGluc3RhbGxfa2VyYXMoKSAtIGRvbid0IHdhbnQgdG8gaW5zdGFsbCBrZXJhcyB1bnRpbCB3ZSd2ZSBkZXRlcm1pbmVkXG4jIHdlIHdhbnQgdG8gdXNlIGl0IGJlY2F1c2Uga2VyYXMgaXMgcXVpdGUgbGFyZ2UuXG5cbmxpYnJhcnkocmVhZHIpXG5saWJyYXJ5KGRhdGEudGFibGUpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIGluc3RhbGxfa2VyYXMoKSAtIGRvbid0IHdhbnQgdG8gaW5zdGFsbCBrZXJhcyB1bnRpbCB3ZSd2ZSBkZXRlcm1pbmVkXG4jIHdlIHdhbnQgdG8gdXNlIGl0IGJlY2F1c2Uga2VyYXMgaXMgcXVpdGUgbGFyZ2UuXG5cbmxpYnJhcnkocmVhZHIpXG5saWJyYXJ5KGRhdGEudGFibGUpXG5saWJyYXJ5KFRlcm1EYXRhQW5hbHlzaXMpXG5saWJyYXJ5KGtlcmFzKVxubGlicmFyeShwYXJzbmlwKVxubGlicmFyeSh0aWR5dmVyc2UpXG5saWJyYXJ5KG1vZGVsZGF0YSlcblxuXG5gYGAifQ== -->
 <pre class="r"><code>
 # install_keras() - don&#39;t want to install keras until we&#39;ve determined
 # we want to use it because keras is quite large.
 
 library(readr)
-library(data.table)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiZGF0YS50YWJsZSAxLjE2LjIgdXNpbmcgOCB0aHJlYWRzIChzZWUgP2dldERUdGhyZWFkcykuICBMYXRlc3QgbmV3czogci1kYXRhdGFibGUuY29tXG4ifQ== -->
-<pre><code>data.table 1.16.2 using 8 threads (see ?getDTthreads).  Latest news: r-datatable.com</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShUZXJtRGF0YUFuYWx5c2lzKVxuIyBsaWJyYXJ5KGtlcmFzKVxuXG5cbmBgYCJ9 -->
-<pre class="r"><code>library(TermDataAnalysis)
-# library(keras)
+library(data.table)
+library(TermDataAnalysis)
+library(keras)
+library(parsnip)
+library(tidyverse)
+library(modeldata)
 </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -1785,7 +1783,7 @@ data_processed &lt;- copy(onlineShopperData)</code></pre>
 <p>Pre-process the data</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIEZpcnN0IHdlIHRyaW0gdGhlIGNvbHVtbnMgd2UgZG9uJ3QgbmVlZCBhdCBhbGxcbmRhdGFfcHJvY2Vzc2VkIDwtIHN0cmlwVXNlbGVzcyhvbmxpbmVTaG9wcGVyRGF0YSwgYyhcIk9wZXJhdGluZ1N5c3RlbXNcIiwgXG4gICAgICAgICAgICAgICAgICAgIFwiQnJvd3NlclwiLCBcIkFkbWluaXN0cmF0aXZlXCIsIFwiSW5mb3JtYXRpb25hbFwiLCBcbiAgICAgICAgICAgICAgICAgICAgXCJQcm9kdWN0UmVsYXRlZFwiKSlcblxuIyBUaGVuIHdlIGNvbWJpbmUgdGhlIGNvbHVtc24gdGhhdCB3ZSB0aGluayB3ZSBjYW4gY29tYmluZVxuIyBXQVJOSU5HOiBUaGUgZ2VuZXJhbGl6YXRpb24gZm9yIHRoaXMgZnVuY3Rpb24gaXNuJ3Qgc2V0IHVwIHlldCBUT0RPXG5kYXRhX3Byb2Nlc3NlZCA8LSBwcm9wb3J0aW9uYWxpemUob25saW5lU2hvcHBlckRhdGEsIHF1b3RlKFByb2R1Y3RSZWxhdGVkX0R1cmF0aW9uKSwgXG4gICAgICAgICAgICAgICAgICAgIHF1b3RlKEFkbWluaXN0cmF0aXZlX0R1cmF0aW9uKSwgcXVvdGUoSW5mb3JtYXRpb25hbF9EdXJhdGlvbiksIFxuICAgICAgICAgICAgICAgICAgICAgIHF1b3RlKFByb2R1Y3RSZWxhdGVkX0R1cmF0aW9uKSlcblxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIEZpcnN0IHdlIHRyaW0gdGhlIGNvbHVtbnMgd2UgZG9uJ3QgbmVlZCBhdCBhbGxcbmRhdGFfcHJvY2Vzc2VkIDwtIHN0cmlwVXNlbGVzcyhvbmxpbmVTaG9wcGVyRGF0YSwgYyhcIk9wZXJhdGluZ1N5c3RlbXNcIiwgXG4gICAgICAgICAgICAgICAgICAgIFwiQnJvd3NlclwiLCBcIkFkbWluaXN0cmF0aXZlXCIsIFwiSW5mb3JtYXRpb25hbFwiLCBcbiAgICAgICAgICAgICAgICAgICAgXCJQcm9kdWN0UmVsYXRlZFwiKSlcblxuIyBUaGVuIHdlIGNvbWJpbmUgdGhlIGNvbHVtc24gdGhhdCB3ZSB0aGluayB3ZSBjYW4gY29tYmluZVxuIyBXQVJOSU5HOiBUaGUgZ2VuZXJhbGl6YXRpb24gZm9yIHRoaXMgZnVuY3Rpb24gaXNuJ3Qgc2V0IHVwIHlldCBUT0RPXG5kYXRhX3Byb2Nlc3NlZCA8LSBwcm9wb3J0aW9uYWxpemUob25saW5lU2hvcHBlckRhdGEsIGMoXCJQcm9kdWN0UmVsYXRlZF9EdXJhdGlvblwiLFxuICAgICAgICAgICAgICAgICAgICAgIFwiQWRtaW5pc3RyYXRpdmVfRHVyYXRpb25cIiwgXCJJbmZvcm1hdGlvbmFsX0R1cmF0aW9uXCIsIFxuICAgICAgICAgICAgICAgICAgICAgIFwiUHJvZHVjdFJlbGF0ZWRfRHVyYXRpb25cIikpXG5cbmRhdGFfcHJvY2Vzc2VkIDwtIGRhdGFfcHJvY2Vzc2VkWywgYyhcbiAgICAgICAgICAgICAgICAgICAgICBcIkFkbWluaXN0cmF0aXZlX0R1cmF0aW9uXCIsIFwiSW5mb3JtYXRpb25hbF9EdXJhdGlvblwiLCBcbiAgICAgICAgICAgICAgICAgICAgICBcIlByb2R1Y3RSZWxhdGVkX0R1cmF0aW9uXCIpIDo9IE5VTExdXG5cbmBgYCJ9 -->
 <pre class="r"><code>
 # First we trim the columns we don&#39;t need at all
 data_processed &lt;- stripUseless(onlineShopperData, c(&quot;OperatingSystems&quot;, 
@@ -1794,9 +1792,13 @@ data_processed &lt;- stripUseless(onlineShopperData, c(&quot;OperatingSystems&qu
 
 # Then we combine the columsn that we think we can combine
 # WARNING: The generalization for this function isn&#39;t set up yet TODO
-data_processed &lt;- proportionalize(onlineShopperData, quote(ProductRelated_Duration), 
-                    quote(Administrative_Duration), quote(Informational_Duration), 
-                      quote(ProductRelated_Duration))
+data_processed &lt;- proportionalize(onlineShopperData, c(&quot;ProductRelated_Duration&quot;,
+                      &quot;Administrative_Duration&quot;, &quot;Informational_Duration&quot;, 
+                      &quot;ProductRelated_Duration&quot;))
+
+data_processed &lt;- data_processed[, c(
+                      &quot;Administrative_Duration&quot;, &quot;Informational_Duration&quot;, 
+                      &quot;ProductRelated_Duration&quot;) := NULL]
 </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -1804,8 +1806,40 @@ data_processed &lt;- proportionalize(onlineShopperData, quote(ProductRelated_Dur
 <p>Build models identical to Sakar, but on our preprocessed version of
 the data We need to try building 1. MultiLayer Perceptron 2. SVM 3.
 Decision Trees</p>
+<p>Initially, we’ll split the data into 70% training set and 30%
+validation, just like in Sakar.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIHNvdXJjZSBmb3IgZXhhbXBsZXMgaHR0cHM6Ly93d3cuci1ibG9nZ2Vycy5jb20vMjAyNC8wOS9ob3ctdG8tc3BsaXQtYS1kYXRhLWZyYW1lLWluLXItYS1jb21wcmVoZW5zaXZlLWd1aWRlLWZvci1iZWdpbm5lcnMvXG5zZXQuc2VlZCgxMjMpXG5cbnNhbXBsZV9zaXplIDwtIGZsb29yKDAuNyAqIG5yb3coZGF0YV9wcm9jZXNzZWQpKVxudHJhaW5faW5kaWNlcyA8LSBzYW1wbGUoc2VxX2xlbihucm93KGRhdGFfcHJvY2Vzc2VkKSksIHNpemUgPSBzYW1wbGVfc2l6ZSlcblxudHJhaW5fZGF0YSA8LSBkYXRhX3Byb2Nlc3NlZFt0cmFpbl9pbmRpY2VzLF1cbnRlc3RfZGF0YSA8LSBkYXRhX3Byb2Nlc3NlZFstdHJhaW5faW5kaWNlcyxdXG5cblxuXG5gYGAifQ== -->
+<pre class="r"><code>
+# source for examples https://www.r-bloggers.com/2024/09/how-to-split-a-data-frame-in-r-a-comprehensive-guide-for-beginners/
+set.seed(123)
+
+sample_size &lt;- floor(0.7 * nrow(data_processed))
+train_indices &lt;- sample(seq_len(nrow(data_processed)), size = sample_size)
+
+train_data &lt;- data_processed[train_indices,]
+test_data &lt;- data_processed[-train_indices,]
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol style="list-style-type: decimal">
+<li>Multilayer Perceptron</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIE1ha2UgYSBzaW1wbGUgbWxwXG5cbm1scDEgPC0gcGFyc25pcDo6bWxwKCkgJT4lXG4gIHBhcnNuaXA6OnNldF9lbmdpbmUoXCJrZXJhc1wiKSAlPiVcbiAgcGFyc25pcDo6c2V0X21vZGUoXCJjbGFzc2lmaWNhdGlvblwiKVxuXG51cGRhdGUobWxwMSwgaGlkZGVuX3VuaXRzID0gMTApXG5cblxuXG5gYGAifQ== -->
+<pre class="r"><code>
+# Make a simple mlp
+
+mlp1 &lt;- parsnip::mlp() %&gt;%
+  parsnip::set_engine(&quot;keras&quot;) %&gt;%
+  parsnip::set_mode(&quot;classification&quot;)
+
+update(mlp1, hidden_units = 10)
+</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Compare results</p>
@@ -1820,7 +1854,7 @@ Decision Trees</p>
 <p>Compare</p>
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkRhdGEgQW5hbHlzaXMiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpJbXBvcnQgbmVjZXNzYXJ5IGxpYnJhcmllcy4NCg0KYGBge3J9DQoNCiMgaW5zdGFsbF9rZXJhcygpIC0gZG9uJ3Qgd2FudCB0byBpbnN0YWxsIGtlcmFzIHVudGlsIHdlJ3ZlIGRldGVybWluZWQNCiMgd2Ugd2FudCB0byB1c2UgaXQgYmVjYXVzZSBrZXJhcyBpcyBxdWl0ZSBsYXJnZS4NCg0KbGlicmFyeShyZWFkcikNCmxpYnJhcnkoZGF0YS50YWJsZSkNCmxpYnJhcnkoVGVybURhdGFBbmFseXNpcykNCiMgbGlicmFyeShrZXJhcykNCg0KDQpgYGANCg0KVGhlbiwgd2UgY2FuIGltcG9ydCB0aGUgZGF0YS4NCg0KYGBge3J9DQpvbmxpbmVTaG9wcGVyRGF0YSA8LSBmcmVhZCgiZGF0YS9vbmxpbmVfc2hvcHBlcnNfaW50ZW50aW9uLmNzdiIpDQpkYXRhX3Byb2Nlc3NlZCA8LSBjb3B5KG9ubGluZVNob3BwZXJEYXRhKQ0KYGBgDQoNCg0KUHJlLXByb2Nlc3MgdGhlIGRhdGENCmBgYHtyfQ0KDQojIEZpcnN0IHdlIHRyaW0gdGhlIGNvbHVtbnMgd2UgZG9uJ3QgbmVlZCBhdCBhbGwNCmRhdGFfcHJvY2Vzc2VkIDwtIHN0cmlwVXNlbGVzcyhvbmxpbmVTaG9wcGVyRGF0YSwgYygiT3BlcmF0aW5nU3lzdGVtcyIsIA0KICAgICAgICAgICAgICAgICAgICAiQnJvd3NlciIsICJBZG1pbmlzdHJhdGl2ZSIsICJJbmZvcm1hdGlvbmFsIiwgDQogICAgICAgICAgICAgICAgICAgICJQcm9kdWN0UmVsYXRlZCIpKQ0KDQojIFRoZW4gd2UgY29tYmluZSB0aGUgY29sdW1zbiB0aGF0IHdlIHRoaW5rIHdlIGNhbiBjb21iaW5lDQojIFdBUk5JTkc6IFRoZSBnZW5lcmFsaXphdGlvbiBmb3IgdGhpcyBmdW5jdGlvbiBpc24ndCBzZXQgdXAgeWV0IFRPRE8NCmRhdGFfcHJvY2Vzc2VkIDwtIHByb3BvcnRpb25hbGl6ZShvbmxpbmVTaG9wcGVyRGF0YSwgcXVvdGUoUHJvZHVjdFJlbGF0ZWRfRHVyYXRpb24pLCANCiAgICAgICAgICAgICAgICAgICAgcXVvdGUoQWRtaW5pc3RyYXRpdmVfRHVyYXRpb24pLCBxdW90ZShJbmZvcm1hdGlvbmFsX0R1cmF0aW9uKSwgDQogICAgICAgICAgICAgICAgICAgICAgcXVvdGUoUHJvZHVjdFJlbGF0ZWRfRHVyYXRpb24pKQ0KDQpgYGANCg0KDQpCdWlsZCBtb2RlbHMgaWRlbnRpY2FsIHRvIFNha2FyLCBidXQgb24gb3VyIHByZXByb2Nlc3NlZCB2ZXJzaW9uIG9mIHRoZSBkYXRhDQpXZSBuZWVkIHRvIHRyeSBidWlsZGluZyANCjEuIE11bHRpTGF5ZXIgUGVyY2VwdHJvbg0KMi4gU1ZNDQozLiBEZWNpc2lvbiBUcmVlcw0KYGBge3J9DQoNCg0KDQoNCmBgYA0KDQpDb21wYXJlIHJlc3VsdHMNCg0KVXNlIG92ZXJzYW1wbGluZw0KDQpSZWNvbnN0cnVjdCBtb2RlbHMNCg0KQ29tcGFyZQ0KDQpJZiB0aW1lIHVzZSBTTU9URT8NCg0KUmVjb25zdHJ1Y3QgbW9kZWxzDQoNCkNvbXBhcmUNCg0KU2lnbmlmaWNhbnRseSByZWR1Y2UgdGhlIHNpemUgb2YgdGhlIHRyYWluaW5nIHNldA0KDQpSZWJ1aWxkIHRoZSBtb2RlbHMgDQoNCkNvbXBhcmUNCg0KDQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkRhdGEgQW5hbHlzaXMiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpJbXBvcnQgbmVjZXNzYXJ5IGxpYnJhcmllcy4NCg0KYGBge3J9DQoNCiMgaW5zdGFsbF9rZXJhcygpIC0gZG9uJ3Qgd2FudCB0byBpbnN0YWxsIGtlcmFzIHVudGlsIHdlJ3ZlIGRldGVybWluZWQNCiMgd2Ugd2FudCB0byB1c2UgaXQgYmVjYXVzZSBrZXJhcyBpcyBxdWl0ZSBsYXJnZS4NCg0KbGlicmFyeShyZWFkcikNCmxpYnJhcnkoZGF0YS50YWJsZSkNCmxpYnJhcnkoVGVybURhdGFBbmFseXNpcykNCmxpYnJhcnkoa2VyYXMpDQpsaWJyYXJ5KHBhcnNuaXApDQpsaWJyYXJ5KHRpZHl2ZXJzZSkNCmxpYnJhcnkobW9kZWxkYXRhKQ0KDQoNCmBgYA0KDQpUaGVuLCB3ZSBjYW4gaW1wb3J0IHRoZSBkYXRhLg0KDQpgYGB7cn0NCm9ubGluZVNob3BwZXJEYXRhIDwtIGZyZWFkKCJkYXRhL29ubGluZV9zaG9wcGVyc19pbnRlbnRpb24uY3N2IikNCmRhdGFfcHJvY2Vzc2VkIDwtIGNvcHkob25saW5lU2hvcHBlckRhdGEpDQpgYGANCg0KDQpQcmUtcHJvY2VzcyB0aGUgZGF0YQ0KYGBge3J9DQoNCiMgRmlyc3Qgd2UgdHJpbSB0aGUgY29sdW1ucyB3ZSBkb24ndCBuZWVkIGF0IGFsbA0KZGF0YV9wcm9jZXNzZWQgPC0gc3RyaXBVc2VsZXNzKG9ubGluZVNob3BwZXJEYXRhLCBjKCJPcGVyYXRpbmdTeXN0ZW1zIiwgDQogICAgICAgICAgICAgICAgICAgICJCcm93c2VyIiwgIkFkbWluaXN0cmF0aXZlIiwgIkluZm9ybWF0aW9uYWwiLCANCiAgICAgICAgICAgICAgICAgICAgIlByb2R1Y3RSZWxhdGVkIikpDQoNCiMgVGhlbiB3ZSBjb21iaW5lIHRoZSBjb2x1bXNuIHRoYXQgd2UgdGhpbmsgd2UgY2FuIGNvbWJpbmUNCiMgV0FSTklORzogVGhlIGdlbmVyYWxpemF0aW9uIGZvciB0aGlzIGZ1bmN0aW9uIGlzbid0IHNldCB1cCB5ZXQgVE9ETw0KZGF0YV9wcm9jZXNzZWQgPC0gcHJvcG9ydGlvbmFsaXplKG9ubGluZVNob3BwZXJEYXRhLCBjKCJQcm9kdWN0UmVsYXRlZF9EdXJhdGlvbiIsDQogICAgICAgICAgICAgICAgICAgICAgIkFkbWluaXN0cmF0aXZlX0R1cmF0aW9uIiwgIkluZm9ybWF0aW9uYWxfRHVyYXRpb24iLCANCiAgICAgICAgICAgICAgICAgICAgICAiUHJvZHVjdFJlbGF0ZWRfRHVyYXRpb24iKSkNCg0KZGF0YV9wcm9jZXNzZWQgPC0gZGF0YV9wcm9jZXNzZWRbLCBjKA0KICAgICAgICAgICAgICAgICAgICAgICJBZG1pbmlzdHJhdGl2ZV9EdXJhdGlvbiIsICJJbmZvcm1hdGlvbmFsX0R1cmF0aW9uIiwgDQogICAgICAgICAgICAgICAgICAgICAgIlByb2R1Y3RSZWxhdGVkX0R1cmF0aW9uIikgOj0gTlVMTF0NCg0KYGBgDQoNCg0KQnVpbGQgbW9kZWxzIGlkZW50aWNhbCB0byBTYWthciwgYnV0IG9uIG91ciBwcmVwcm9jZXNzZWQgdmVyc2lvbiBvZiB0aGUgZGF0YQ0KV2UgbmVlZCB0byB0cnkgYnVpbGRpbmcgDQoxLiBNdWx0aUxheWVyIFBlcmNlcHRyb24NCjIuIFNWTQ0KMy4gRGVjaXNpb24gVHJlZXMNCg0KSW5pdGlhbGx5LCB3ZSdsbCBzcGxpdCB0aGUgZGF0YSBpbnRvIDcwJSB0cmFpbmluZyBzZXQgYW5kIDMwJSB2YWxpZGF0aW9uLCBqdXN0IGxpa2UNCmluIFNha2FyLg0KDQpgYGB7cn0NCg0KIyBzb3VyY2UgZm9yIGV4YW1wbGVzIGh0dHBzOi8vd3d3LnItYmxvZ2dlcnMuY29tLzIwMjQvMDkvaG93LXRvLXNwbGl0LWEtZGF0YS1mcmFtZS1pbi1yLWEtY29tcHJlaGVuc2l2ZS1ndWlkZS1mb3ItYmVnaW5uZXJzLw0Kc2V0LnNlZWQoMTIzKQ0KDQpzYW1wbGVfc2l6ZSA8LSBmbG9vcigwLjcgKiBucm93KGRhdGFfcHJvY2Vzc2VkKSkNCnRyYWluX2luZGljZXMgPC0gc2FtcGxlKHNlcV9sZW4obnJvdyhkYXRhX3Byb2Nlc3NlZCkpLCBzaXplID0gc2FtcGxlX3NpemUpDQoNCnRyYWluX2RhdGEgPC0gZGF0YV9wcm9jZXNzZWRbdHJhaW5faW5kaWNlcyxdDQp0ZXN0X2RhdGEgPC0gZGF0YV9wcm9jZXNzZWRbLXRyYWluX2luZGljZXMsXQ0KDQoNCmBgYA0KDQoNCjEuIE11bHRpbGF5ZXIgUGVyY2VwdHJvbg0KYGBge3J9DQoNCiMgTWFrZSBhIHNpbXBsZSBtbHANCg0KbWxwMSA8LSBwYXJzbmlwOjptbHAoKSAlPiUNCiAgcGFyc25pcDo6c2V0X2VuZ2luZSgia2VyYXMiKSAlPiUNCiAgcGFyc25pcDo6c2V0X21vZGUoImNsYXNzaWZpY2F0aW9uIikNCg0KdXBkYXRlKG1scDEsIGhpZGRlbl91bml0cyA9IDEwKQ0KDQoNCg0KYGBgDQoNCkNvbXBhcmUgcmVzdWx0cw0KDQpVc2Ugb3ZlcnNhbXBsaW5nDQoNClJlY29uc3RydWN0IG1vZGVscw0KDQpDb21wYXJlDQoNCklmIHRpbWUgdXNlIFNNT1RFPw0KDQpSZWNvbnN0cnVjdCBtb2RlbHMNCg0KQ29tcGFyZQ0KDQpTaWduaWZpY2FudGx5IHJlZHVjZSB0aGUgc2l6ZSBvZiB0aGUgdHJhaW5pbmcgc2V0DQoNClJlYnVpbGQgdGhlIG1vZGVscyANCg0KQ29tcGFyZQ0KDQoNCg==</div>
 
 
 
