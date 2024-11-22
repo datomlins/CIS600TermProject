@@ -18,14 +18,23 @@ library(parsnip)
 library(tidyverse)
 library(modeldata)
 
+# devtools::install_github("rstudio/tensorflow")
 
 ```
 
 Then, we can import the data.
 
 ```{r}
+#colTypes <- c("int", "num", "int", "num", "int", "num", 
+#  "num", "num", "num", "num", "factor", "int",
+#  "int", "int", "int", "factor", "factor", "factor")
+
 onlineShopperData <- fread("data/online_shoppers_intention.csv")
-data_processed <- copy(onlineShopperData)
+
+data_processed <- onlineShopperData[, Revenue := as.factor(Revenue)]
+
+
+
 ```
 
 
@@ -33,19 +42,24 @@ Pre-process the data
 ```{r}
 
 # First we trim the columns we don't need at all
-data_processed <- stripUseless(onlineShopperData, c("OperatingSystems", 
+#data_processed <- stripUseless(data_processed, c("OperatingSystems", 
+#                    "Browser", "Administrative", "Informational", 
+#                    "ProductRelated"))
+uselessColumns <- c("OperatingSystems", 
                     "Browser", "Administrative", "Informational", 
-                    "ProductRelated"))
+                    "ProductRelated")
+
+data_processed_2 <- data_processed[, uselessColumns := NULL]
 
 # Then we combine the columsn that we think we can combine
 # WARNING: The generalization for this function isn't set up yet TODO
-data_processed <- proportionalize(onlineShopperData, c("ProductRelated_Duration",
-                      "Administrative_Duration", "Informational_Duration", 
-                      "ProductRelated_Duration"))
+data_processed_2 <- proportionalize(data_processed, c("ProductRelated_Duration",
+                     "Administrative_Duration", "Informational_Duration", 
+                     "ProductRelated_Duration"))
 
-data_processed <- data_processed[, c(
-                      "Administrative_Duration", "Informational_Duration", 
-                      "ProductRelated_Duration") := NULL]
+#data_processed <- data_processed[, c(
+#                      "Administrative_Duration", "Informational_Duration", 
+#                      "ProductRelated_Duration") := NULL]
 
 ```
 
@@ -64,28 +78,37 @@ in Sakar.
 # source for examples https://www.r-bloggers.com/2024/09/how-to-split-a-data-frame-in-r-a-comprehensive-guide-for-beginners/
 set.seed(123)
 
-sample_size <- floor(0.7 * nrow(data_processed))
-train_indices <- sample(seq_len(nrow(data_processed)), size = sample_size)
+sample_size <- floor(0.7 * nrow(data_processed_2))
+train_indices <- sample(seq_len(nrow(data_processed_2)), size = sample_size)
 
-train_data <- data_processed[train_indices,]
-test_data <- data_processed[-train_indices,]
+train_data <- data_processed_2[train_indices,]
+test_data <- data_processed_2[-train_indices,]
 
 
 ```
 
 
 1. Multilayer Perceptron
+
+Define the first mlp
 ```{r}
 
 # Make a simple mlp
 
 mlp1 <- parsnip::mlp() %>%
   parsnip::set_engine("keras") %>%
-  parsnip::set_mode("classification")
+  parsnip::set_mode("classification") %>%
+  translate()
 
 update(mlp1, hidden_units = 10)
 
 
+```
+
+Train the first mlp
+```{r}
+
+mlp1_fit <- mlp1 %>% fit(Revenue ~ ., data = test_data)
 
 ```
 
