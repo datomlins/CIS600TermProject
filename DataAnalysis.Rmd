@@ -60,9 +60,9 @@ data_processed_2 <- proportionalize(data_processed_2, c("ProductRelated_Duration
                      "Administrative_Duration", "Informational_Duration", 
                      "ProductRelated_Duration"))
 
-#data_processed <- data_processed[, c(
-#                      "Administrative_Duration", "Informational_Duration", 
-#                      "ProductRelated_Duration") := NULL]
+data_processed_2 <- data_processed_2[, c(
+                      "Administrative_Duration", "Informational_Duration", 
+                      "ProductRelated_Duration") := NULL]
 
 ```
 
@@ -120,16 +120,16 @@ mlp1_fit <- mlp1 %>% fit("Revenue", data = test_data)
 
 ```
 
-2. SVm
+2. SVM
 
 3. Random Forest
 ```{r}
 
 ## Classification:
 set.seed(71)
-data_processed.rf <- randomForest(Revenue ~ ., data=data_processed, importance=TRUE,
-                        proximity=TRUE)
-print(data_processed.rf)
+train_data.rf <- randomForest(Revenue ~ ., data=train_data, importance=TRUE,
+                        proximity=TRUE, na.action = na.omit)
+print(train_data.rf)
 
 ```
 
