@@ -1755,69 +1755,21 @@ display: none;
 <p>Import necessary libraries.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIGluc3RhbGxfa2VyYXMoKSAtIGRvbid0IHdhbnQgdG8gaW5zdGFsbCBrZXJhcyB1bnRpbCB3ZSd2ZSBkZXRlcm1pbmVkXG4jIHdlIHdhbnQgdG8gdXNlIGl0IGJlY2F1c2Uga2VyYXMgaXMgcXVpdGUgbGFyZ2UuXG5cbmxpYnJhcnkocmVhZHIpXG5saWJyYXJ5KGRhdGEudGFibGUpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIGluc3RhbGxfa2VyYXMoKSAtIGRvbid0IHdhbnQgdG8gaW5zdGFsbCBrZXJhcyB1bnRpbCB3ZSd2ZSBkZXRlcm1pbmVkXG4jIHdlIHdhbnQgdG8gdXNlIGl0IGJlY2F1c2Uga2VyYXMgaXMgcXVpdGUgbGFyZ2UuXG5cbmxpYnJhcnkocmVhZHIpXG5saWJyYXJ5KGRhdGEudGFibGUpXG5saWJyYXJ5KFRlcm1EYXRhQW5hbHlzaXMpXG5saWJyYXJ5KGtlcmFzKVxubGlicmFyeShwYXJzbmlwKVxubGlicmFyeSh0aWR5dmVyc2UpXG5saWJyYXJ5KG1vZGVsZGF0YSlcbmxpYnJhcnkocmFuZG9tRm9yZXN0KVxuXG4jIGRldnRvb2xzOjppbnN0YWxsX2dpdGh1YihcInJzdHVkaW8vdGVuc29yZmxvd1wiKVxuXG5gYGAifQ== -->
 <pre class="r"><code>
 # install_keras() - don&#39;t want to install keras until we&#39;ve determined
 # we want to use it because keras is quite large.
 
 library(readr)
-library(data.table)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUmVnaXN0ZXJlZCBTMyBtZXRob2Qgb3ZlcndyaXR0ZW4gYnkgJ2RhdGEudGFibGUnOlxuICBtZXRob2QgICAgICAgICAgIGZyb21cbiAgcHJpbnQuZGF0YS50YWJsZSAgICAgXG5kYXRhLnRhYmxlIDEuMTYuMiB1c2luZyA4IHRocmVhZHMgKHNlZSA/Z2V0RFR0aHJlYWRzKS4gIExhdGVzdCBuZXdzOiByLWRhdGF0YWJsZS5jb21cbiJ9 -->
-<pre><code>Registered S3 method overwritten by &#39;data.table&#39;:
-  method           from
-  print.data.table     
-data.table 1.16.2 using 8 threads (see ?getDTthreads).  Latest news: r-datatable.com</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShUZXJtRGF0YUFuYWx5c2lzKVxubGlicmFyeShrZXJhcylcbmBgYCJ9 -->
-<pre class="r"><code>library(TermDataAnalysis)
-library(keras)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogcGFja2FnZSDigJhrZXJhc+KAmSB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDQuNC4yXG4ifQ== -->
-<pre><code>Warning: package ‘keras’ was built under R version 4.4.2</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShwYXJzbmlwKVxuYGBgIn0= -->
-<pre class="r"><code>library(parsnip)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogcGFja2FnZSDigJhwYXJzbmlw4oCZIHdhcyBidWlsdCB1bmRlciBSIHZlcnNpb24gNC40LjJcbiJ9 -->
-<pre><code>Warning: package ‘parsnip’ was built under R version 4.4.2</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5gYGAifQ== -->
-<pre class="r"><code>library(tidyverse)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogcGFja2FnZSDigJh0aWR5dmVyc2XigJkgd2FzIGJ1aWx0IHVuZGVyIFIgdmVyc2lvbiA0LjQuMldhcm5pbmc6IHBhY2thZ2Ug4oCYZ2dwbG90MuKAmSB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDQuNC4yV2FybmluZzogcGFja2FnZSDigJh0aWR5cuKAmSB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDQuNC4yV2FybmluZzogcGFja2FnZSDigJhkcGx5cuKAmSB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDQuNC4yV2FybmluZzogcGFja2FnZSDigJhmb3JjYXRz4oCZIHdhcyBidWlsdCB1bmRlciBSIHZlcnNpb24gNC40LjJXYXJuaW5nOiBwYWNrYWdlIOKAmGx1YnJpZGF0ZeKAmSB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDQuNC4y4pSA4pSAIEF0dGFjaGluZyBjb3JlIHRpZHl2ZXJzZSBwYWNrYWdlcyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAgdGlkeXZlcnNlIDIuMC4wIOKUgOKUgFxu4pyUIGRwbHlyICAgICAxLjEuNCAgICAg4pyUIHB1cnJyICAgICAxLjAuMlxu4pyUIGZvcmNhdHMgICAxLjAuMCAgICAg4pyUIHN0cmluZ3IgICAxLjUuMVxu4pyUIGdncGxvdDIgICAzLjUuMSAgICAg4pyUIHRpYmJsZSAgICAzLjIuMVxu4pyUIGx1YnJpZGF0ZSAxLjkuMyAgICAg4pyUIHRpZHlyICAgICAxLjMuMeKUgOKUgCBDb25mbGljdHMg4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSAIHRpZHl2ZXJzZV9jb25mbGljdHMoKSDilIDilIBcbuKcliBkcGx5cjo6YmV0d2VlbigpICAgICBtYXNrcyBkYXRhLnRhYmxlOjpiZXR3ZWVuKClcbuKcliBkcGx5cjo6ZmlsdGVyKCkgICAgICBtYXNrcyBzdGF0czo6ZmlsdGVyKClcbuKcliBkcGx5cjo6Zmlyc3QoKSAgICAgICBtYXNrcyBkYXRhLnRhYmxlOjpmaXJzdCgpXG7inJYgbHVicmlkYXRlOjpob3VyKCkgICAgbWFza3MgZGF0YS50YWJsZTo6aG91cigpXG7inJYgbHVicmlkYXRlOjppc293ZWVrKCkgbWFza3MgZGF0YS50YWJsZTo6aXNvd2VlaygpXG7inJYgZHBseXI6OmxhZygpICAgICAgICAgbWFza3Mgc3RhdHM6OmxhZygpXG7inJYgZHBseXI6Omxhc3QoKSAgICAgICAgbWFza3MgZGF0YS50YWJsZTo6bGFzdCgpXG7inJYgbHVicmlkYXRlOjptZGF5KCkgICAgbWFza3MgZGF0YS50YWJsZTo6bWRheSgpXG7inJYgbHVicmlkYXRlOjptaW51dGUoKSAgbWFza3MgZGF0YS50YWJsZTo6bWludXRlKClcbuKcliBsdWJyaWRhdGU6Om1vbnRoKCkgICBtYXNrcyBkYXRhLnRhYmxlOjptb250aCgpXG7inJYgbHVicmlkYXRlOjpxdWFydGVyKCkgbWFza3MgZGF0YS50YWJsZTo6cXVhcnRlcigpXG7inJYgbHVicmlkYXRlOjpzZWNvbmQoKSAgbWFza3MgZGF0YS50YWJsZTo6c2Vjb25kKClcbuKcliBwdXJycjo6dHJhbnNwb3NlKCkgICBtYXNrcyBkYXRhLnRhYmxlOjp0cmFuc3Bvc2UoKVxu4pyWIGx1YnJpZGF0ZTo6d2RheSgpICAgIG1hc2tzIGRhdGEudGFibGU6OndkYXkoKVxu4pyWIGx1YnJpZGF0ZTo6d2VlaygpICAgIG1hc2tzIGRhdGEudGFibGU6OndlZWsoKVxu4pyWIGx1YnJpZGF0ZTo6eWRheSgpICAgIG1hc2tzIGRhdGEudGFibGU6OnlkYXkoKVxu4pyWIGx1YnJpZGF0ZTo6eWVhcigpICAgIG1hc2tzIGRhdGEudGFibGU6OnllYXIoKVxu4oS5IFVzZSB0aGUgXHUwMDFiXTg7O2h0dHA6Ly9jb25mbGljdGVkLnItbGliLm9yZy9cdTAwMDdjb25mbGljdGVkIHBhY2thZ2VcdTAwMWJdODs7XHUwMDA3IHRvIGZvcmNlIGFsbCBjb25mbGljdHMgdG8gYmVjb21lIGVycm9yc1xuIn0= -->
-<pre><code>Warning: package ‘tidyverse’ was built under R version 4.4.2Warning: package ‘ggplot2’ was built under R version 4.4.2Warning: package ‘tidyr’ was built under R version 4.4.2Warning: package ‘dplyr’ was built under R version 4.4.2Warning: package ‘forcats’ was built under R version 4.4.2Warning: package ‘lubridate’ was built under R version 4.4.2── Attaching core tidyverse packages ───────────────────────────────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ purrr     1.0.2
-✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.5.1     ✔ tibble    3.2.1
-✔ lubridate 1.9.3     ✔ tidyr     1.3.1── Conflicts ─────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::between()     masks data.table::between()
-✖ dplyr::filter()      masks stats::filter()
-✖ dplyr::first()       masks data.table::first()
-✖ lubridate::hour()    masks data.table::hour()
-✖ lubridate::isoweek() masks data.table::isoweek()
-✖ dplyr::lag()         masks stats::lag()
-✖ dplyr::last()        masks data.table::last()
-✖ lubridate::mday()    masks data.table::mday()
-✖ lubridate::minute()  masks data.table::minute()
-✖ lubridate::month()   masks data.table::month()
-✖ lubridate::quarter() masks data.table::quarter()
-✖ lubridate::second()  masks data.table::second()
-✖ purrr::transpose()   masks data.table::transpose()
-✖ lubridate::wday()    masks data.table::wday()
-✖ lubridate::week()    masks data.table::week()
-✖ lubridate::yday()    masks data.table::yday()
-✖ lubridate::year()    masks data.table::year()
-ℹ Use the ]8;;http://conflicted.r-lib.org/conflicted package]8;; to force all conflicts to become errors</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShtb2RlbGRhdGEpXG5gYGAifQ== -->
-<pre class="r"><code>library(modeldata)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogcGFja2FnZSDigJhtb2RlbGRhdGHigJkgd2FzIGJ1aWx0IHVuZGVyIFIgdmVyc2lvbiA0LjQuMlxuIn0= -->
-<pre><code>Warning: package ‘modeldata’ was built under R version 4.4.2</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBkZXZ0b29sczo6aW5zdGFsbF9naXRodWIoXCJyc3R1ZGlvL3RlbnNvcmZsb3dcIilcblxuYGBgIn0= -->
-<pre class="r"><code># devtools::install_github(&quot;rstudio/tensorflow&quot;)
+library(data.table)
+library(TermDataAnalysis)
+library(keras)
+library(parsnip)
+library(tidyverse)
+library(modeldata)
+library(randomForest)
+
+# devtools::install_github(&quot;rstudio/tensorflow&quot;)
 </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -1840,7 +1792,7 @@ data_processed &lt;- onlineShopperData[, Revenue := as.factor(Revenue)]
 <p>Pre-process the data</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIEZpcnN0IHdlIHRyaW0gdGhlIGNvbHVtbnMgd2UgZG9uJ3QgbmVlZCBhdCBhbGxcbiNkYXRhX3Byb2Nlc3NlZCA8LSBzdHJpcFVzZWxlc3MoZGF0YV9wcm9jZXNzZWQsIGMoXCJPcGVyYXRpbmdTeXN0ZW1zXCIsIFxuIyAgICAgICAgICAgICAgICAgICAgXCJCcm93c2VyXCIsIFwiQWRtaW5pc3RyYXRpdmVcIiwgXCJJbmZvcm1hdGlvbmFsXCIsIFxuIyAgICAgICAgICAgICAgICAgICAgXCJQcm9kdWN0UmVsYXRlZFwiKSlcbnVzZWxlc3NDb2x1bW5zIDwtIGMoXCJPcGVyYXRpbmdTeXN0ZW1zXCIsIFxuICAgICAgICAgICAgICAgICAgICBcIkJyb3dzZXJcIiwgXCJBZG1pbmlzdHJhdGl2ZVwiLCBcIkluZm9ybWF0aW9uYWxcIiwgXG4gICAgICAgICAgICAgICAgICAgIFwiUHJvZHVjdFJlbGF0ZWRcIilcblxuZGF0YV9wcm9jZXNzZWRfMiA8LSBkYXRhX3Byb2Nlc3NlZFssIHVzZWxlc3NDb2x1bW5zIDo9IE5VTExdXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIEZpcnN0IHdlIHRyaW0gdGhlIGNvbHVtbnMgd2UgZG9uJ3QgbmVlZCBhdCBhbGxcbiNkYXRhX3Byb2Nlc3NlZCA8LSBzdHJpcFVzZWxlc3MoZGF0YV9wcm9jZXNzZWQsIGMoXCJPcGVyYXRpbmdTeXN0ZW1zXCIsIFxuIyAgICAgICAgICAgICAgICAgICAgXCJCcm93c2VyXCIsIFwiQWRtaW5pc3RyYXRpdmVcIiwgXCJJbmZvcm1hdGlvbmFsXCIsIFxuIyAgICAgICAgICAgICAgICAgICAgXCJQcm9kdWN0UmVsYXRlZFwiKSlcbnVzZWxlc3NDb2x1bW5zIDwtIGMoXCJPcGVyYXRpbmdTeXN0ZW1zXCIsIFxuICAgICAgICAgICAgICAgICAgICBcIkJyb3dzZXJcIiwgXCJBZG1pbmlzdHJhdGl2ZVwiLCBcIkluZm9ybWF0aW9uYWxcIiwgXG4gICAgICAgICAgICAgICAgICAgIFwiUHJvZHVjdFJlbGF0ZWRcIilcblxuZGF0YV9wcm9jZXNzZWRfMiA8LSBkYXRhX3Byb2Nlc3NlZFssIGMoXCJPcGVyYXRpbmdTeXN0ZW1zXCIsIFxuICAgICAgICAgICAgICAgICAgICBcIkJyb3dzZXJcIiwgXCJBZG1pbmlzdHJhdGl2ZVwiLCBcIkluZm9ybWF0aW9uYWxcIiwgXG4gICAgICAgICAgICAgICAgICAgIFwiUHJvZHVjdFJlbGF0ZWRcIikgOj0gTlVMTF1cblxuIyBUaGVuIHdlIGNvbWJpbmUgdGhlIGNvbHVtc24gdGhhdCB3ZSB0aGluayB3ZSBjYW4gY29tYmluZVxuIyBXQVJOSU5HOiBUaGUgZ2VuZXJhbGl6YXRpb24gZm9yIHRoaXMgZnVuY3Rpb24gaXNuJ3Qgc2V0IHVwIHlldCBUT0RPXG5kYXRhX3Byb2Nlc3NlZF8yIDwtIHByb3BvcnRpb25hbGl6ZShkYXRhX3Byb2Nlc3NlZF8yLCBjKFwiUHJvZHVjdFJlbGF0ZWRfRHVyYXRpb25cIixcbiAgICAgICAgICAgICAgICAgICAgIFwiQWRtaW5pc3RyYXRpdmVfRHVyYXRpb25cIiwgXCJJbmZvcm1hdGlvbmFsX0R1cmF0aW9uXCIsIFxuICAgICAgICAgICAgICAgICAgICAgXCJQcm9kdWN0UmVsYXRlZF9EdXJhdGlvblwiKSlcblxuI2RhdGFfcHJvY2Vzc2VkIDwtIGRhdGFfcHJvY2Vzc2VkWywgYyhcbiMgICAgICAgICAgICAgICAgICAgICAgXCJBZG1pbmlzdHJhdGl2ZV9EdXJhdGlvblwiLCBcIkluZm9ybWF0aW9uYWxfRHVyYXRpb25cIiwgXG4jICAgICAgICAgICAgICAgICAgICAgIFwiUHJvZHVjdFJlbGF0ZWRfRHVyYXRpb25cIikgOj0gTlVMTF1cblxuYGBgIn0= -->
 <pre class="r"><code>
 # First we trim the columns we don&#39;t need at all
 #data_processed &lt;- stripUseless(data_processed, c(&quot;OperatingSystems&quot;, 
@@ -1850,15 +1802,13 @@ uselessColumns &lt;- c(&quot;OperatingSystems&quot;,
                     &quot;Browser&quot;, &quot;Administrative&quot;, &quot;Informational&quot;, 
                     &quot;ProductRelated&quot;)
 
-data_processed_2 &lt;- data_processed[, uselessColumns := NULL]</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogVHJpZWQgdG8gYXNzaWduIE5VTEwgdG8gY29sdW1uICd1c2VsZXNzQ29sdW1ucycsIGJ1dCB0aGlzIGNvbHVtbiBkb2VzIG5vdCBleGlzdCB0byByZW1vdmVcbiJ9 -->
-<pre><code>Warning: Tried to assign NULL to column &#39;uselessColumns&#39;, but this column does not exist to remove</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBUaGVuIHdlIGNvbWJpbmUgdGhlIGNvbHVtc24gdGhhdCB3ZSB0aGluayB3ZSBjYW4gY29tYmluZVxuIyBXQVJOSU5HOiBUaGUgZ2VuZXJhbGl6YXRpb24gZm9yIHRoaXMgZnVuY3Rpb24gaXNuJ3Qgc2V0IHVwIHlldCBUT0RPXG5kYXRhX3Byb2Nlc3NlZF8yIDwtIHByb3BvcnRpb25hbGl6ZShkYXRhX3Byb2Nlc3NlZCwgYyhcIlByb2R1Y3RSZWxhdGVkX0R1cmF0aW9uXCIsXG4gICAgICAgICAgICAgICAgICAgICBcIkFkbWluaXN0cmF0aXZlX0R1cmF0aW9uXCIsIFwiSW5mb3JtYXRpb25hbF9EdXJhdGlvblwiLCBcbiAgICAgICAgICAgICAgICAgICAgIFwiUHJvZHVjdFJlbGF0ZWRfRHVyYXRpb25cIikpXG5cbiNkYXRhX3Byb2Nlc3NlZCA8LSBkYXRhX3Byb2Nlc3NlZFssIGMoXG4jICAgICAgICAgICAgICAgICAgICAgIFwiQWRtaW5pc3RyYXRpdmVfRHVyYXRpb25cIiwgXCJJbmZvcm1hdGlvbmFsX0R1cmF0aW9uXCIsIFxuIyAgICAgICAgICAgICAgICAgICAgICBcIlByb2R1Y3RSZWxhdGVkX0R1cmF0aW9uXCIpIDo9IE5VTExdXG5cbmBgYCJ9 -->
-<pre class="r"><code># Then we combine the columsn that we think we can combine
+data_processed_2 &lt;- data_processed[, c(&quot;OperatingSystems&quot;, 
+                    &quot;Browser&quot;, &quot;Administrative&quot;, &quot;Informational&quot;, 
+                    &quot;ProductRelated&quot;) := NULL]
+
+# Then we combine the columsn that we think we can combine
 # WARNING: The generalization for this function isn&#39;t set up yet TODO
-data_processed_2 &lt;- proportionalize(data_processed, c(&quot;ProductRelated_Duration&quot;,
+data_processed_2 &lt;- proportionalize(data_processed_2, c(&quot;ProductRelated_Duration&quot;,
                      &quot;Administrative_Duration&quot;, &quot;Informational_Duration&quot;, 
                      &quot;ProductRelated_Duration&quot;))
 
@@ -1891,109 +1841,53 @@ test_data &lt;- data_processed_2[-train_indices,]
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <ol style="list-style-type: decimal">
-<li>Multilayer Perceptron</li>
+<li>Multilayer Perceptron TODO - In Progress</li>
 </ol>
-<p>Define the first mlp</p>
+<p>Define the first mlp TODO - In Progress</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIE1ha2UgYSBzaW1wbGUgbWxwXG5cbm1scDEgPC0gcGFyc25pcDo6bWxwKCkgJT4lXG4gIHBhcnNuaXA6OnNldF9lbmdpbmUoXCJrZXJhc1wiKSAlPiVcbiAgcGFyc25pcDo6c2V0X21vZGUoXCJjbGFzc2lmaWNhdGlvblwiKSAlPiVcbiAgdHJhbnNsYXRlKClcblxudXBkYXRlKG1scDEsIGhpZGRlbl91bml0cyA9IDEwKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIE1ha2UgYSBzaW1wbGUgbWxwXG5cbm1scDEgPSBrZXJhc19tb2RlbF9zZXF1ZW50aWFsKClcbm1scDEgJT4lXG4gIGxheWVyX2RlbnNlKHVuaXRzPTEwLCBhY3RpdmF0aW9uPSdyZWx1JywgaW5wdXRfc2hhcGUgPSBjKDEyKSlcblxubWxwMSAlPiUgY29tcGlsZShcbiAgbG9zcyA9ICdjYXRlZ29yaWNhbF9jcm9zc2VudHJvcHknLFxuICBvcHRpbWl6ZXIgPSBvcHRpbWl6ZXJfc2dkKCksXG4gIG1ldHJpY3MgPSBjKCdhY2N1cmFjeScpXG4pXG5cbmBgYCJ9 -->
 <pre class="r"><code>
 # Make a simple mlp
 
-mlp1 &lt;- parsnip::mlp() %&gt;%
-  parsnip::set_engine(&quot;keras&quot;) %&gt;%
-  parsnip::set_mode(&quot;classification&quot;) %&gt;%
-  translate()
+mlp1 = keras_model_sequential()
+mlp1 %&gt;%
+  layer_dense(units=10, activation=&#39;relu&#39;, input_shape = c(12))
 
-update(mlp1, hidden_units = 10)</code></pre>
+mlp1 %&gt;% compile(
+  loss = &#39;categorical_crossentropy&#39;,
+  optimizer = optimizer_sgd(),
+  metrics = c(&#39;accuracy&#39;)
+)
+</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiU2luZ2xlIExheWVyIE5ldXJhbCBOZXR3b3JrIE1vZGVsIFNwZWNpZmljYXRpb24gKGNsYXNzaWZpY2F0aW9uKVxuXG5NYWluIEFyZ3VtZW50czpcbiAgaGlkZGVuX3VuaXRzID0gMTBcblxuQ29tcHV0YXRpb25hbCBlbmdpbmU6IGtlcmFzIFxuIn0= -->
-<pre><code>Single Layer Neural Network Model Specification (classification)
-
-Main Arguments:
-  hidden_units = 10
-
-Computational engine: keras </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Train the first mlp</p>
+<p>Train the first mlp TODO - In Progress</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5tbHAxX2ZpdCA8LSBtbHAxICU+JSBmaXQoUmV2ZW51ZSB+IC4sIGRhdGEgPSB0ZXN0X2RhdGEpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5tbHAxX2ZpdCA8LSBtbHAxICU+JSBmaXQoXCJSZXZlbnVlXCIsIGRhdGEgPSB0ZXN0X2RhdGEpXG5cbmBgYCJ9 -->
 <pre class="r"><code>
-mlp1_fit &lt;- mlp1 %&gt;% fit(Revenue ~ ., data = test_data)</code></pre>
+mlp1_fit &lt;- mlp1 %&gt;% fit(&quot;Revenue&quot;, data = test_data)
+</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiVXNpbmcgUHl0aG9uOiBDOi9Vc2Vycy90b21saS9hbmFjb25kYTMvcHl0aG9uLmV4ZVxuQ3JlYXRpbmcgdmlydHVhbCBlbnZpcm9ubWVudCBcInItcmV0aWN1bGF0ZVwiIC4uLiBcbiJ9 -->
-<pre><code>Using Python: C:/Users/tomli/anaconda3/python.exe
-Creating virtual environment &quot;r-reticulate&quot; ... </code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiKyBcIkM6L1VzZXJzL3RvbWxpL2FuYWNvbmRhMy9weXRob24uZXhlXCIgLW0gdmVudiBcIkM6L1VzZXJzL3RvbWxpL09uZURyaXZlL0RvY3VtZW50cy8udmlydHVhbGVudnMvci1yZXRpY3VsYXRlXCJcbiJ9 -->
-<pre><code>+ &quot;C:/Users/tomli/anaconda3/python.exe&quot; -m venv &quot;C:/Users/tomli/OneDrive/Documents/.virtualenvs/r-reticulate&quot;</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRG9uZSFcbkluc3RhbGxpbmcgcGFja2FnZXM6IHBpcCwgd2hlZWwsIHNldHVwdG9vbHNcbiJ9 -->
-<pre><code>Done!
-Installing packages: pip, wheel, setuptools</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiKyBcIkM6L1VzZXJzL3RvbWxpL09uZURyaXZlL0RvY3VtZW50cy8udmlydHVhbGVudnMvci1yZXRpY3VsYXRlL1NjcmlwdHMvcHl0aG9uLmV4ZVwiIC1tIHBpcCBpbnN0YWxsIC0tdXBncmFkZSBwaXAgd2hlZWwgc2V0dXB0b29sc1xuIn0= -->
-<pre><code>+ &quot;C:/Users/tomli/OneDrive/Documents/.virtualenvs/r-reticulate/Scripts/python.exe&quot; -m pip install --upgrade pip wheel setuptools</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUmVxdWlyZW1lbnQgYWxyZWFkeSBzYXRpc2ZpZWQ6IHBpcCBpbiBjOlxcdXNlcnNcXHRvbWxpXFxvbmVkcml2ZVxcZG9jdW1lfjFcXHZpcnR1YX4xXFxyLXJldGl+MVxcbGliXFxzaXRlLXBhY2thZ2VzICgyNC4wKVxuQ29sbGVjdGluZyBwaXBcbiAgRG93bmxvYWRpbmcgcGlwLTI0LjMuMS1weTMtbm9uZS1hbnkud2hsLm1ldGFkYXRhICgzLjcga0IpXG5Db2xsZWN0aW5nIHdoZWVsXG4gIERvd25sb2FkaW5nIHdoZWVsLTAuNDUuMC1weTMtbm9uZS1hbnkud2hsLm1ldGFkYXRhICgyLjMga0IpXG5Db2xsZWN0aW5nIHNldHVwdG9vbHNcbiAgRG93bmxvYWRpbmcgc2V0dXB0b29scy03NS42LjAtcHkzLW5vbmUtYW55LndobC5tZXRhZGF0YSAoNi43IGtCKVxuRG93bmxvYWRpbmcgcGlwLTI0LjMuMS1weTMtbm9uZS1hbnkud2hsICgxLjggTUIpXG4gICAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tIDEuOC8xLjggTUIgNS41IE1CL3MgZXRhIDA6MDA6MDBcbkRvd25sb2FkaW5nIHdoZWVsLTAuNDUuMC1weTMtbm9uZS1hbnkud2hsICg3MiBrQilcbiAgIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0gNzIuNS83Mi41IGtCIDMuOSBNQi9zIGV0YSAwOjAwOjAwXG5Eb3dubG9hZGluZyBzZXR1cHRvb2xzLTc1LjYuMC1weTMtbm9uZS1hbnkud2hsICgxLjIgTUIpXG4gICAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tIDEuMi8xLjIgTUIgMTIuOSBNQi9zIGV0YSAwOjAwOjAwXG5JbnN0YWxsaW5nIGNvbGxlY3RlZCBwYWNrYWdlczogd2hlZWwsIHNldHVwdG9vbHMsIHBpcFxuICBBdHRlbXB0aW5nIHVuaW5zdGFsbDogcGlwXG4gICAgRm91bmQgZXhpc3RpbmcgaW5zdGFsbGF0aW9uOiBwaXAgMjQuMFxuICAgIFVuaW5zdGFsbGluZyBwaXAtMjQuMDpcbiAgICAgIFN1Y2Nlc3NmdWxseSB1bmluc3RhbGxlZCBwaXAtMjQuMFxuU3VjY2Vzc2Z1bGx5IGluc3RhbGxlZCBwaXAtMjQuMy4xIHNldHVwdG9vbHMtNzUuNi4wIHdoZWVsLTAuNDUuMFxuSW5zdGFsbGluZyBwYWNrYWdlczogbnVtcHlcbiJ9 -->
-<pre><code>Requirement already satisfied: pip in c:\users\tomli\onedrive\docume~1\virtua~1\r-reti~1\lib\site-packages (24.0)
-Collecting pip
-  Downloading pip-24.3.1-py3-none-any.whl.metadata (3.7 kB)
-Collecting wheel
-  Downloading wheel-0.45.0-py3-none-any.whl.metadata (2.3 kB)
-Collecting setuptools
-  Downloading setuptools-75.6.0-py3-none-any.whl.metadata (6.7 kB)
-Downloading pip-24.3.1-py3-none-any.whl (1.8 MB)
-   ---------------------------------------- 1.8/1.8 MB 5.5 MB/s eta 0:00:00
-Downloading wheel-0.45.0-py3-none-any.whl (72 kB)
-   ---------------------------------------- 72.5/72.5 kB 3.9 MB/s eta 0:00:00
-Downloading setuptools-75.6.0-py3-none-any.whl (1.2 MB)
-   ---------------------------------------- 1.2/1.2 MB 12.9 MB/s eta 0:00:00
-Installing collected packages: wheel, setuptools, pip
-  Attempting uninstall: pip
-    Found existing installation: pip 24.0
-    Uninstalling pip-24.0:
-      Successfully uninstalled pip-24.0
-Successfully installed pip-24.3.1 setuptools-75.6.0 wheel-0.45.0
-Installing packages: numpy</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiKyBcIkM6L1VzZXJzL3RvbWxpL09uZURyaXZlL0RvY3VtZW50cy8udmlydHVhbGVudnMvci1yZXRpY3VsYXRlL1NjcmlwdHMvcHl0aG9uLmV4ZVwiIC1tIHBpcCBpbnN0YWxsIC0tdXBncmFkZSAtLW5vLXVzZXIgbnVtcHlcbiJ9 -->
-<pre><code>+ &quot;C:/Users/tomli/OneDrive/Documents/.virtualenvs/r-reticulate/Scripts/python.exe&quot; -m pip install --upgrade --no-user numpy</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQ29sbGVjdGluZyBudW1weVxuICBEb3dubG9hZGluZyBudW1weS0yLjEuMy1jcDMxMi1jcDMxMi13aW5fYW1kNjQud2hsLm1ldGFkYXRhICg2MCBrQilcbkRvd25sb2FkaW5nIG51bXB5LTIuMS4zLWNwMzEyLWNwMzEyLXdpbl9hbWQ2NC53aGwgKDEyLjYgTUIpXG4gICAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tIDEyLjYvMTIuNiBNQiAxLjYgTUIvcyBldGEgMDowMDowMFxuSW5zdGFsbGluZyBjb2xsZWN0ZWQgcGFja2FnZXM6IG51bXB5XG5TdWNjZXNzZnVsbHkgaW5zdGFsbGVkIG51bXB5LTIuMS4zXG5WaXJ0dWFsIGVudmlyb25tZW50ICdyLXJldGljdWxhdGUnIHN1Y2Nlc3NmdWxseSBjcmVhdGVkLlxuIn0= -->
-<pre><code>Collecting numpy
-  Downloading numpy-2.1.3-cp312-cp312-win_amd64.whl.metadata (60 kB)
-Downloading numpy-2.1.3-cp312-cp312-win_amd64.whl (12.6 MB)
-   ---------------------------------------- 12.6/12.6 MB 1.6 MB/s eta 0:00:00
-Installing collected packages: numpy
-Successfully installed numpy-2.1.3
-Virtual environment &#39;r-reticulate&#39; successfully created.</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3I6IFZhbGlkIGluc3RhbGxhdGlvbiBvZiBUZW5zb3JGbG93IG5vdCBmb3VuZC5cblxuUHl0aG9uIGVudmlyb25tZW50cyBzZWFyY2hlZCBmb3IgJ3RlbnNvcmZsb3cnIHBhY2thZ2U6XG4gQzpcXFVzZXJzXFx0b21saVxcT25lRHJpdmVcXERvY3VtZW50c1xcLnZpcnR1YWxlbnZzXFxyLXJldGljdWxhdGVcXFNjcmlwdHNcXHB5dGhvbi5leGVcblxuUHl0aG9uIGV4Y2VwdGlvbiBlbmNvdW50ZXJlZDpcbiBUcmFjZWJhY2sgKG1vc3QgcmVjZW50IGNhbGwgbGFzdCk6XG4gIEZpbGUgXCJDOlxcVXNlcnNcXHRvbWxpXFxBcHBEYXRhXFxMb2NhbFxcUlxcd2luLWxpYnJhcnlcXDQuNFxccmV0aWN1bGF0ZVxccHl0aG9uXFxycHl0b29sc1xcbG9hZGVyLnB5XCIsIGxpbmUgMTIyLCBpbiBfZmluZF9hbmRfbG9hZF9ob29rXG4gICAgcmV0dXJuIF9ydW5faG9vayhuYW1lLCBfaG9vaylcbiAgICAgICAgICAgXl5eXl5eXl5eXl5eXl5eXl5eXl5eXlxuICBGaWxlIFwiQzpcXFVzZXJzXFx0b21saVxcQXBwRGF0YVxcTG9jYWxcXFJcXHdpbi1saWJyYXJ5XFw0LjRcXHJldGljdWxhdGVcXHB5dGhvblxccnB5dG9vbHNcXGxvYWRlci5weVwiLCBsaW5lIDk2LCBpbiBfcnVuX2hvb2tcbiAgICBtb2R1bGUgPSBob29rKClcbiAgICAgICAgICAgICBeXl5eXl5cbiAgRmlsZSBcIkM6XFxVc2Vyc1xcdG9tbGlcXEFwcERhdGFcXExvY2FsXFxSXFx3aW4tbGlicmFyeVxcNC40XFxyZXRpY3VsYXRlXFxweXRob25cXHJweXRvb2xzXFxsb2FkZXIucHlcIiwgbGluZSAxMjAsIGluIF9ob29rXG4gICAgcmV0dXJuIF9maW5kX2FuZF9sb2FkKG5hbWUsIGltcG9ydF8pXG4gICAgICAgICAgIF5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXG5Nb2R1bGVOb3RGb3VuZEVycm9yOiBObyBtb2R1bGUgbmFtZWQgJ3RlbnNvcmZsb3cnXG5cblxuWW91IGNhbiBpbnN0YWxsIFRlbnNvckZsb3cgdXNpbmcgdGhlIGluc3RhbGxfdGVuc29yZmxvdygpIGZ1bmN0aW9uLlxuIn0= -->
-<pre><code>Error: Valid installation of TensorFlow not found.
-
-Python environments searched for &#39;tensorflow&#39; package:
- C:\Users\tomli\OneDrive\Documents\.virtualenvs\r-reticulate\Scripts\python.exe
-
-Python exception encountered:
- Traceback (most recent call last):
-  File &quot;C:\Users\tomli\AppData\Local\R\win-library\4.4\reticulate\python\rpytools\loader.py&quot;, line 122, in _find_and_load_hook
-    return _run_hook(name, _hook)
-           ^^^^^^^^^^^^^^^^^^^^^^
-  File &quot;C:\Users\tomli\AppData\Local\R\win-library\4.4\reticulate\python\rpytools\loader.py&quot;, line 96, in _run_hook
-    module = hook()
-             ^^^^^^
-  File &quot;C:\Users\tomli\AppData\Local\R\win-library\4.4\reticulate\python\rpytools\loader.py&quot;, line 120, in _hook
-    return _find_and_load(name, import_)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ModuleNotFoundError: No module named &#39;tensorflow&#39;
-
-
-You can install TensorFlow using the install_tensorflow() function.</code></pre>
-<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="2" style="list-style-type: decimal">
+<li><p>SVm</p></li>
+<li><p>Random Forest</p></li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIyBDbGFzc2lmaWNhdGlvbjpcbnNldC5zZWVkKDcxKVxuZGF0YV9wcm9jZXNzZWQucmYgPC0gcmFuZG9tRm9yZXN0KFJldmVudWUgfiAuLCBkYXRhPWRhdGFfcHJvY2Vzc2VkLCBpbXBvcnRhbmNlPVRSVUUsXG4gICAgICAgICAgICAgICAgICAgICAgICBwcm94aW1pdHk9VFJVRSlcbnByaW50KGRhdGFfcHJvY2Vzc2VkLnJmKVxuXG5gYGAifQ== -->
+<pre class="r"><code>
+## Classification:
+set.seed(71)
+data_processed.rf &lt;- randomForest(Revenue ~ ., data=data_processed, importance=TRUE,
+                        proximity=TRUE)
+print(data_processed.rf)
+</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Compare results</p>
@@ -2008,7 +1902,7 @@ You can install TensorFlow using the install_tensorflow() function.</code></pre>
 <p>Compare</p>
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkRhdGEgQW5hbHlzaXMiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpJbXBvcnQgbmVjZXNzYXJ5IGxpYnJhcmllcy4NCg0KYGBge3J9DQoNCiMgaW5zdGFsbF9rZXJhcygpIC0gZG9uJ3Qgd2FudCB0byBpbnN0YWxsIGtlcmFzIHVudGlsIHdlJ3ZlIGRldGVybWluZWQNCiMgd2Ugd2FudCB0byB1c2UgaXQgYmVjYXVzZSBrZXJhcyBpcyBxdWl0ZSBsYXJnZS4NCg0KbGlicmFyeShyZWFkcikNCmxpYnJhcnkoZGF0YS50YWJsZSkNCmxpYnJhcnkoVGVybURhdGFBbmFseXNpcykNCmxpYnJhcnkoa2VyYXMpDQpsaWJyYXJ5KHBhcnNuaXApDQpsaWJyYXJ5KHRpZHl2ZXJzZSkNCmxpYnJhcnkobW9kZWxkYXRhKQ0KDQojIGRldnRvb2xzOjppbnN0YWxsX2dpdGh1YigicnN0dWRpby90ZW5zb3JmbG93IikNCg0KYGBgDQoNClRoZW4sIHdlIGNhbiBpbXBvcnQgdGhlIGRhdGEuDQoNCmBgYHtyfQ0KI2NvbFR5cGVzIDwtIGMoImludCIsICJudW0iLCAiaW50IiwgIm51bSIsICJpbnQiLCAibnVtIiwgDQojICAibnVtIiwgIm51bSIsICJudW0iLCAibnVtIiwgImZhY3RvciIsICJpbnQiLA0KIyAgImludCIsICJpbnQiLCAiaW50IiwgImZhY3RvciIsICJmYWN0b3IiLCAiZmFjdG9yIikNCg0Kb25saW5lU2hvcHBlckRhdGEgPC0gZnJlYWQoImRhdGEvb25saW5lX3Nob3BwZXJzX2ludGVudGlvbi5jc3YiKQ0KDQpkYXRhX3Byb2Nlc3NlZCA8LSBvbmxpbmVTaG9wcGVyRGF0YVssIFJldmVudWUgOj0gYXMuZmFjdG9yKFJldmVudWUpXQ0KDQoNCg0KYGBgDQoNCg0KUHJlLXByb2Nlc3MgdGhlIGRhdGENCmBgYHtyfQ0KDQojIEZpcnN0IHdlIHRyaW0gdGhlIGNvbHVtbnMgd2UgZG9uJ3QgbmVlZCBhdCBhbGwNCiNkYXRhX3Byb2Nlc3NlZCA8LSBzdHJpcFVzZWxlc3MoZGF0YV9wcm9jZXNzZWQsIGMoIk9wZXJhdGluZ1N5c3RlbXMiLCANCiMgICAgICAgICAgICAgICAgICAgICJCcm93c2VyIiwgIkFkbWluaXN0cmF0aXZlIiwgIkluZm9ybWF0aW9uYWwiLCANCiMgICAgICAgICAgICAgICAgICAgICJQcm9kdWN0UmVsYXRlZCIpKQ0KdXNlbGVzc0NvbHVtbnMgPC0gYygiT3BlcmF0aW5nU3lzdGVtcyIsIA0KICAgICAgICAgICAgICAgICAgICAiQnJvd3NlciIsICJBZG1pbmlzdHJhdGl2ZSIsICJJbmZvcm1hdGlvbmFsIiwgDQogICAgICAgICAgICAgICAgICAgICJQcm9kdWN0UmVsYXRlZCIpDQoNCmRhdGFfcHJvY2Vzc2VkXzIgPC0gZGF0YV9wcm9jZXNzZWRbLCB1c2VsZXNzQ29sdW1ucyA6PSBOVUxMXQ0KDQojIFRoZW4gd2UgY29tYmluZSB0aGUgY29sdW1zbiB0aGF0IHdlIHRoaW5rIHdlIGNhbiBjb21iaW5lDQojIFdBUk5JTkc6IFRoZSBnZW5lcmFsaXphdGlvbiBmb3IgdGhpcyBmdW5jdGlvbiBpc24ndCBzZXQgdXAgeWV0IFRPRE8NCmRhdGFfcHJvY2Vzc2VkXzIgPC0gcHJvcG9ydGlvbmFsaXplKGRhdGFfcHJvY2Vzc2VkLCBjKCJQcm9kdWN0UmVsYXRlZF9EdXJhdGlvbiIsDQogICAgICAgICAgICAgICAgICAgICAiQWRtaW5pc3RyYXRpdmVfRHVyYXRpb24iLCAiSW5mb3JtYXRpb25hbF9EdXJhdGlvbiIsIA0KICAgICAgICAgICAgICAgICAgICAgIlByb2R1Y3RSZWxhdGVkX0R1cmF0aW9uIikpDQoNCiNkYXRhX3Byb2Nlc3NlZCA8LSBkYXRhX3Byb2Nlc3NlZFssIGMoDQojICAgICAgICAgICAgICAgICAgICAgICJBZG1pbmlzdHJhdGl2ZV9EdXJhdGlvbiIsICJJbmZvcm1hdGlvbmFsX0R1cmF0aW9uIiwgDQojICAgICAgICAgICAgICAgICAgICAgICJQcm9kdWN0UmVsYXRlZF9EdXJhdGlvbiIpIDo9IE5VTExdDQoNCmBgYA0KDQoNCkJ1aWxkIG1vZGVscyBpZGVudGljYWwgdG8gU2FrYXIsIGJ1dCBvbiBvdXIgcHJlcHJvY2Vzc2VkIHZlcnNpb24gb2YgdGhlIGRhdGENCldlIG5lZWQgdG8gdHJ5IGJ1aWxkaW5nIA0KMS4gTXVsdGlMYXllciBQZXJjZXB0cm9uDQoyLiBTVk0NCjMuIERlY2lzaW9uIFRyZWVzDQoNCkluaXRpYWxseSwgd2UnbGwgc3BsaXQgdGhlIGRhdGEgaW50byA3MCUgdHJhaW5pbmcgc2V0IGFuZCAzMCUgdmFsaWRhdGlvbiwganVzdCBsaWtlDQppbiBTYWthci4NCg0KYGBge3J9DQoNCiMgc291cmNlIGZvciBleGFtcGxlcyBodHRwczovL3d3dy5yLWJsb2dnZXJzLmNvbS8yMDI0LzA5L2hvdy10by1zcGxpdC1hLWRhdGEtZnJhbWUtaW4tci1hLWNvbXByZWhlbnNpdmUtZ3VpZGUtZm9yLWJlZ2lubmVycy8NCnNldC5zZWVkKDEyMykNCg0Kc2FtcGxlX3NpemUgPC0gZmxvb3IoMC43ICogbnJvdyhkYXRhX3Byb2Nlc3NlZF8yKSkNCnRyYWluX2luZGljZXMgPC0gc2FtcGxlKHNlcV9sZW4obnJvdyhkYXRhX3Byb2Nlc3NlZF8yKSksIHNpemUgPSBzYW1wbGVfc2l6ZSkNCg0KdHJhaW5fZGF0YSA8LSBkYXRhX3Byb2Nlc3NlZF8yW3RyYWluX2luZGljZXMsXQ0KdGVzdF9kYXRhIDwtIGRhdGFfcHJvY2Vzc2VkXzJbLXRyYWluX2luZGljZXMsXQ0KDQoNCmBgYA0KDQoNCjEuIE11bHRpbGF5ZXIgUGVyY2VwdHJvbg0KDQpEZWZpbmUgdGhlIGZpcnN0IG1scA0KYGBge3J9DQoNCiMgTWFrZSBhIHNpbXBsZSBtbHANCg0KbWxwMSA8LSBwYXJzbmlwOjptbHAoKSAlPiUNCiAgcGFyc25pcDo6c2V0X2VuZ2luZSgia2VyYXMiKSAlPiUNCiAgcGFyc25pcDo6c2V0X21vZGUoImNsYXNzaWZpY2F0aW9uIikgJT4lDQogIHRyYW5zbGF0ZSgpDQoNCnVwZGF0ZShtbHAxLCBoaWRkZW5fdW5pdHMgPSAxMCkNCg0KDQpgYGANCg0KVHJhaW4gdGhlIGZpcnN0IG1scA0KYGBge3J9DQoNCm1scDFfZml0IDwtIG1scDEgJT4lIGZpdChSZXZlbnVlIH4gLiwgZGF0YSA9IHRlc3RfZGF0YSkNCg0KYGBgDQoNCkNvbXBhcmUgcmVzdWx0cw0KDQpVc2Ugb3ZlcnNhbXBsaW5nDQoNClJlY29uc3RydWN0IG1vZGVscw0KDQpDb21wYXJlDQoNCklmIHRpbWUgdXNlIFNNT1RFPw0KDQpSZWNvbnN0cnVjdCBtb2RlbHMNCg0KQ29tcGFyZQ0KDQpTaWduaWZpY2FudGx5IHJlZHVjZSB0aGUgc2l6ZSBvZiB0aGUgdHJhaW5pbmcgc2V0DQoNClJlYnVpbGQgdGhlIG1vZGVscyANCg0KQ29tcGFyZQ0KDQoNCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkRhdGEgQW5hbHlzaXMiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpJbXBvcnQgbmVjZXNzYXJ5IGxpYnJhcmllcy4NCg0KYGBge3J9DQoNCiMgaW5zdGFsbF9rZXJhcygpIC0gZG9uJ3Qgd2FudCB0byBpbnN0YWxsIGtlcmFzIHVudGlsIHdlJ3ZlIGRldGVybWluZWQNCiMgd2Ugd2FudCB0byB1c2UgaXQgYmVjYXVzZSBrZXJhcyBpcyBxdWl0ZSBsYXJnZS4NCg0KbGlicmFyeShyZWFkcikNCmxpYnJhcnkoZGF0YS50YWJsZSkNCmxpYnJhcnkoVGVybURhdGFBbmFseXNpcykNCmxpYnJhcnkoa2VyYXMpDQpsaWJyYXJ5KHBhcnNuaXApDQpsaWJyYXJ5KHRpZHl2ZXJzZSkNCmxpYnJhcnkobW9kZWxkYXRhKQ0KbGlicmFyeShyYW5kb21Gb3Jlc3QpDQoNCiMgZGV2dG9vbHM6Omluc3RhbGxfZ2l0aHViKCJyc3R1ZGlvL3RlbnNvcmZsb3ciKQ0KDQpgYGANCg0KVGhlbiwgd2UgY2FuIGltcG9ydCB0aGUgZGF0YS4NCg0KYGBge3J9DQojY29sVHlwZXMgPC0gYygiaW50IiwgIm51bSIsICJpbnQiLCAibnVtIiwgImludCIsICJudW0iLCANCiMgICJudW0iLCAibnVtIiwgIm51bSIsICJudW0iLCAiZmFjdG9yIiwgImludCIsDQojICAiaW50IiwgImludCIsICJpbnQiLCAiZmFjdG9yIiwgImZhY3RvciIsICJmYWN0b3IiKQ0KDQpvbmxpbmVTaG9wcGVyRGF0YSA8LSBmcmVhZCgiZGF0YS9vbmxpbmVfc2hvcHBlcnNfaW50ZW50aW9uLmNzdiIpDQoNCmRhdGFfcHJvY2Vzc2VkIDwtIG9ubGluZVNob3BwZXJEYXRhWywgUmV2ZW51ZSA6PSBhcy5mYWN0b3IoUmV2ZW51ZSldDQoNCg0KDQpgYGANCg0KDQpQcmUtcHJvY2VzcyB0aGUgZGF0YQ0KYGBge3J9DQoNCiMgRmlyc3Qgd2UgdHJpbSB0aGUgY29sdW1ucyB3ZSBkb24ndCBuZWVkIGF0IGFsbA0KI2RhdGFfcHJvY2Vzc2VkIDwtIHN0cmlwVXNlbGVzcyhkYXRhX3Byb2Nlc3NlZCwgYygiT3BlcmF0aW5nU3lzdGVtcyIsIA0KIyAgICAgICAgICAgICAgICAgICAgIkJyb3dzZXIiLCAiQWRtaW5pc3RyYXRpdmUiLCAiSW5mb3JtYXRpb25hbCIsIA0KIyAgICAgICAgICAgICAgICAgICAgIlByb2R1Y3RSZWxhdGVkIikpDQp1c2VsZXNzQ29sdW1ucyA8LSBjKCJPcGVyYXRpbmdTeXN0ZW1zIiwgDQogICAgICAgICAgICAgICAgICAgICJCcm93c2VyIiwgIkFkbWluaXN0cmF0aXZlIiwgIkluZm9ybWF0aW9uYWwiLCANCiAgICAgICAgICAgICAgICAgICAgIlByb2R1Y3RSZWxhdGVkIikNCg0KZGF0YV9wcm9jZXNzZWRfMiA8LSBkYXRhX3Byb2Nlc3NlZFssIGMoIk9wZXJhdGluZ1N5c3RlbXMiLCANCiAgICAgICAgICAgICAgICAgICAgIkJyb3dzZXIiLCAiQWRtaW5pc3RyYXRpdmUiLCAiSW5mb3JtYXRpb25hbCIsIA0KICAgICAgICAgICAgICAgICAgICAiUHJvZHVjdFJlbGF0ZWQiKSA6PSBOVUxMXQ0KDQojIFRoZW4gd2UgY29tYmluZSB0aGUgY29sdW1zbiB0aGF0IHdlIHRoaW5rIHdlIGNhbiBjb21iaW5lDQojIFdBUk5JTkc6IFRoZSBnZW5lcmFsaXphdGlvbiBmb3IgdGhpcyBmdW5jdGlvbiBpc24ndCBzZXQgdXAgeWV0IFRPRE8NCmRhdGFfcHJvY2Vzc2VkXzIgPC0gcHJvcG9ydGlvbmFsaXplKGRhdGFfcHJvY2Vzc2VkXzIsIGMoIlByb2R1Y3RSZWxhdGVkX0R1cmF0aW9uIiwNCiAgICAgICAgICAgICAgICAgICAgICJBZG1pbmlzdHJhdGl2ZV9EdXJhdGlvbiIsICJJbmZvcm1hdGlvbmFsX0R1cmF0aW9uIiwgDQogICAgICAgICAgICAgICAgICAgICAiUHJvZHVjdFJlbGF0ZWRfRHVyYXRpb24iKSkNCg0KI2RhdGFfcHJvY2Vzc2VkIDwtIGRhdGFfcHJvY2Vzc2VkWywgYygNCiMgICAgICAgICAgICAgICAgICAgICAgIkFkbWluaXN0cmF0aXZlX0R1cmF0aW9uIiwgIkluZm9ybWF0aW9uYWxfRHVyYXRpb24iLCANCiMgICAgICAgICAgICAgICAgICAgICAgIlByb2R1Y3RSZWxhdGVkX0R1cmF0aW9uIikgOj0gTlVMTF0NCg0KYGBgDQoNCg0KQnVpbGQgbW9kZWxzIGlkZW50aWNhbCB0byBTYWthciwgYnV0IG9uIG91ciBwcmVwcm9jZXNzZWQgdmVyc2lvbiBvZiB0aGUgZGF0YQ0KV2UgbmVlZCB0byB0cnkgYnVpbGRpbmcgDQoxLiBNdWx0aUxheWVyIFBlcmNlcHRyb24NCjIuIFNWTQ0KMy4gRGVjaXNpb24gVHJlZXMNCg0KSW5pdGlhbGx5LCB3ZSdsbCBzcGxpdCB0aGUgZGF0YSBpbnRvIDcwJSB0cmFpbmluZyBzZXQgYW5kIDMwJSB2YWxpZGF0aW9uLCBqdXN0IGxpa2UNCmluIFNha2FyLg0KDQpgYGB7cn0NCg0KIyBzb3VyY2UgZm9yIGV4YW1wbGVzIGh0dHBzOi8vd3d3LnItYmxvZ2dlcnMuY29tLzIwMjQvMDkvaG93LXRvLXNwbGl0LWEtZGF0YS1mcmFtZS1pbi1yLWEtY29tcHJlaGVuc2l2ZS1ndWlkZS1mb3ItYmVnaW5uZXJzLw0Kc2V0LnNlZWQoMTIzKQ0KDQpzYW1wbGVfc2l6ZSA8LSBmbG9vcigwLjcgKiBucm93KGRhdGFfcHJvY2Vzc2VkXzIpKQ0KdHJhaW5faW5kaWNlcyA8LSBzYW1wbGUoc2VxX2xlbihucm93KGRhdGFfcHJvY2Vzc2VkXzIpKSwgc2l6ZSA9IHNhbXBsZV9zaXplKQ0KDQp0cmFpbl9kYXRhIDwtIGRhdGFfcHJvY2Vzc2VkXzJbdHJhaW5faW5kaWNlcyxdDQp0ZXN0X2RhdGEgPC0gZGF0YV9wcm9jZXNzZWRfMlstdHJhaW5faW5kaWNlcyxdDQoNCg0KYGBgDQoNCg0KMS4gTXVsdGlsYXllciBQZXJjZXB0cm9uDQpUT0RPIC0gSW4gUHJvZ3Jlc3MNCg0KRGVmaW5lIHRoZSBmaXJzdCBtbHANClRPRE8gLSBJbiBQcm9ncmVzcw0KYGBge3J9DQoNCiMgTWFrZSBhIHNpbXBsZSBtbHANCg0KbWxwMSA9IGtlcmFzX21vZGVsX3NlcXVlbnRpYWwoKQ0KbWxwMSAlPiUNCiAgbGF5ZXJfZGVuc2UodW5pdHM9MTAsIGFjdGl2YXRpb249J3JlbHUnLCBpbnB1dF9zaGFwZSA9IGMoMTIpKQ0KDQptbHAxICU+JSBjb21waWxlKA0KICBsb3NzID0gJ2NhdGVnb3JpY2FsX2Nyb3NzZW50cm9weScsDQogIG9wdGltaXplciA9IG9wdGltaXplcl9zZ2QoKSwNCiAgbWV0cmljcyA9IGMoJ2FjY3VyYWN5JykNCikNCg0KYGBgDQoNClRyYWluIHRoZSBmaXJzdCBtbHANClRPRE8gLSBJbiBQcm9ncmVzcw0KYGBge3J9DQoNCm1scDFfZml0IDwtIG1scDEgJT4lIGZpdCgiUmV2ZW51ZSIsIGRhdGEgPSB0ZXN0X2RhdGEpDQoNCmBgYA0KDQoyLiBTVm0NCg0KMy4gUmFuZG9tIEZvcmVzdA0KYGBge3J9DQoNCiMjIENsYXNzaWZpY2F0aW9uOg0Kc2V0LnNlZWQoNzEpDQpkYXRhX3Byb2Nlc3NlZC5yZiA8LSByYW5kb21Gb3Jlc3QoUmV2ZW51ZSB+IC4sIGRhdGE9ZGF0YV9wcm9jZXNzZWQsIGltcG9ydGFuY2U9VFJVRSwNCiAgICAgICAgICAgICAgICAgICAgICAgIHByb3hpbWl0eT1UUlVFKQ0KcHJpbnQoZGF0YV9wcm9jZXNzZWQucmYpDQoNCmBgYA0KDQoNCkNvbXBhcmUgcmVzdWx0cw0KDQpVc2Ugb3ZlcnNhbXBsaW5nDQoNClJlY29uc3RydWN0IG1vZGVscw0KDQpDb21wYXJlDQoNCklmIHRpbWUgdXNlIFNNT1RFPw0KDQpSZWNvbnN0cnVjdCBtb2RlbHMNCg0KQ29tcGFyZQ0KDQpTaWduaWZpY2FudGx5IHJlZHVjZSB0aGUgc2l6ZSBvZiB0aGUgdHJhaW5pbmcgc2V0DQoNClJlYnVpbGQgdGhlIG1vZGVscyANCg0KQ29tcGFyZQ0KDQoNCg==</div>
 
 
 
