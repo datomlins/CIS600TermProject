@@ -13,16 +13,29 @@ Import necessary libraries.
 library(readr)
 library(data.table)
 library(TermDataAnalysis)
-# library(keras)
+library(keras)
+library(parsnip)
+library(tidyverse)
+library(modeldata)
+library(randomForest)
 
+# devtools::install_github("rstudio/tensorflow")
 
 ```
 
 Then, we can import the data.
 
 ```{r}
+#colTypes <- c("int", "num", "int", "num", "int", "num", 
+#  "num", "num", "num", "num", "factor", "int",
+#  "int", "int", "int", "factor", "factor", "factor")
+
 onlineShopperData <- fread("data/online_shoppers_intention.csv")
-data_processed <- copy(onlineShopperData)
+
+data_processed <- onlineShopperData[, Revenue := as.factor(Revenue)]
+
+
+
 ```
 
 
@@ -30,15 +43,26 @@ Pre-process the data
 ```{r}
 
 # First we trim the columns we don't need at all
-data_processed <- stripUseless(onlineShopperData, c("OperatingSystems", 
+#data_processed <- stripUseless(data_processed, c("OperatingSystems", 
+#                    "Browser", "Administrative", "Informational", 
+#                    "ProductRelated"))
+uselessColumns <- c("OperatingSystems", 
                     "Browser", "Administrative", "Informational", 
-                    "ProductRelated"))
+                    "ProductRelated")
+
+data_processed_2 <- data_processed[, c("OperatingSystems", 
+                    "Browser", "Administrative", "Informational", 
+                    "ProductRelated") := NULL]
 
 # Then we combine the columsn that we think we can combine
 # WARNING: The generalization for this function isn't set up yet TODO
-data_processed <- proportionalize(onlineShopperData, "ProductRelated_Duration", 
-                    c("Administrative_Duration", "Informational_Duration", 
-                      "ProductRelated_Duration"))
+data_processed_2 <- proportionalize(data_processed_2, c("ProductRelated_Duration",
+                     "Administrative_Duration", "Informational_Duration", 
+                     "ProductRelated_Duration"))
+
+data_processed_2 <- data_processed_2[, c(
+                      "Administrative_Duration", "Informational_Duration", 
+                      "ProductRelated_Duration") := NULL]
 
 ```
 
@@ -48,12 +72,67 @@ We need to try building
 1. MultiLayer Perceptron
 2. SVM
 3. Decision Trees
+
+Initially, we'll split the data into 70% training set and 30% validation, just like
+in Sakar.
+
 ```{r}
 
+# source for examples https://www.r-bloggers.com/2024/09/how-to-split-a-data-frame-in-r-a-comprehensive-guide-for-beginners/
+set.seed(123)
 
+sample_size <- floor(0.7 * nrow(data_processed_2))
+train_indices <- sample(seq_len(nrow(data_processed_2)), size = sample_size)
+
+train_data <- data_processed_2[train_indices,]
+test_data <- data_processed_2[-train_indices,]
 
 
 ```
+
+
+1. Multilayer Perceptron
+TODO - In Progress
+
+Define the first mlp
+TODO - In Progress
+```{r}
+
+# Make a simple mlp
+
+mlp1 = keras_model_sequential()
+mlp1 %>%
+  layer_dense(units=10, activation='relu', input_shape = c(12))
+
+mlp1 %>% compile(
+  loss = 'categorical_crossentropy',
+  optimizer = optimizer_sgd(),
+  metrics = c('accuracy')
+)
+
+```
+
+Train the first mlp
+TODO - In Progress
+```{r}
+
+mlp1_fit <- mlp1 %>% fit("Revenue", data = test_data)
+
+```
+
+2. SVM
+
+3. Random Forest
+```{r}
+
+## Classification:
+set.seed(71)
+train_data.rf <- randomForest(Revenue ~ ., data=train_data, importance=TRUE,
+                        proximity=TRUE, na.action = na.omit)
+print(train_data.rf)
+
+```
+
 
 Compare results
 

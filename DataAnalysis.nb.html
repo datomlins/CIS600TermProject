@@ -1755,23 +1755,21 @@ display: none;
 <p>Import necessary libraries.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIGluc3RhbGxfa2VyYXMoKSAtIGRvbid0IHdhbnQgdG8gaW5zdGFsbCBrZXJhcyB1bnRpbCB3ZSd2ZSBkZXRlcm1pbmVkXG4jIHdlIHdhbnQgdG8gdXNlIGl0IGJlY2F1c2Uga2VyYXMgaXMgcXVpdGUgbGFyZ2UuXG5cbmxpYnJhcnkocmVhZHIpXG5saWJyYXJ5KGRhdGEudGFibGUpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIGluc3RhbGxfa2VyYXMoKSAtIGRvbid0IHdhbnQgdG8gaW5zdGFsbCBrZXJhcyB1bnRpbCB3ZSd2ZSBkZXRlcm1pbmVkXG4jIHdlIHdhbnQgdG8gdXNlIGl0IGJlY2F1c2Uga2VyYXMgaXMgcXVpdGUgbGFyZ2UuXG5cbmxpYnJhcnkocmVhZHIpXG5saWJyYXJ5KGRhdGEudGFibGUpXG5saWJyYXJ5KFRlcm1EYXRhQW5hbHlzaXMpXG5saWJyYXJ5KGtlcmFzKVxubGlicmFyeShwYXJzbmlwKVxubGlicmFyeSh0aWR5dmVyc2UpXG5saWJyYXJ5KG1vZGVsZGF0YSlcbmxpYnJhcnkocmFuZG9tRm9yZXN0KVxuXG4jIGRldnRvb2xzOjppbnN0YWxsX2dpdGh1YihcInJzdHVkaW8vdGVuc29yZmxvd1wiKVxuXG5gYGAifQ== -->
 <pre class="r"><code>
 # install_keras() - don&#39;t want to install keras until we&#39;ve determined
 # we want to use it because keras is quite large.
 
 library(readr)
-library(data.table)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUmVnaXN0ZXJlZCBTMyBtZXRob2Qgb3ZlcndyaXR0ZW4gYnkgJ2RhdGEudGFibGUnOlxuICBtZXRob2QgICAgICAgICAgIGZyb21cbiAgcHJpbnQuZGF0YS50YWJsZSAgICAgXG5kYXRhLnRhYmxlIDEuMTYuMiB1c2luZyA4IHRocmVhZHMgKHNlZSA/Z2V0RFR0aHJlYWRzKS4gIExhdGVzdCBuZXdzOiByLWRhdGF0YWJsZS5jb21cbiJ9 -->
-<pre><code>Registered S3 method overwritten by &#39;data.table&#39;:
-  method           from
-  print.data.table     
-data.table 1.16.2 using 8 threads (see ?getDTthreads).  Latest news: r-datatable.com</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShUZXJtRGF0YUFuYWx5c2lzKVxuIyBsaWJyYXJ5KGtlcmFzKVxuXG5cbmBgYCJ9 -->
-<pre class="r"><code>library(TermDataAnalysis)
-# library(keras)
+library(data.table)
+library(TermDataAnalysis)
+library(keras)
+library(parsnip)
+library(tidyverse)
+library(modeldata)
+library(randomForest)
+
+# devtools::install_github(&quot;rstudio/tensorflow&quot;)
 </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -1779,25 +1777,44 @@ data.table 1.16.2 using 8 threads (see ?getDTthreads).  Latest news: r-datatable
 <p>Then, we can import the data.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxub25saW5lU2hvcHBlckRhdGEgPC0gZnJlYWQoXCJkYXRhL29ubGluZV9zaG9wcGVyc19pbnRlbnRpb24uY3N2XCIpXG5kYXRhX3Byb2Nlc3NlZCA8LSBjb3B5KG9ubGluZVNob3BwZXJEYXRhKVxuYGBgIn0= -->
-<pre class="r"><code>onlineShopperData &lt;- fread(&quot;data/online_shoppers_intention.csv&quot;)
-data_processed &lt;- copy(onlineShopperData)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2NvbFR5cGVzIDwtIGMoXCJpbnRcIiwgXCJudW1cIiwgXCJpbnRcIiwgXCJudW1cIiwgXCJpbnRcIiwgXCJudW1cIiwgXG4jICBcIm51bVwiLCBcIm51bVwiLCBcIm51bVwiLCBcIm51bVwiLCBcImZhY3RvclwiLCBcImludFwiLFxuIyAgXCJpbnRcIiwgXCJpbnRcIiwgXCJpbnRcIiwgXCJmYWN0b3JcIiwgXCJmYWN0b3JcIiwgXCJmYWN0b3JcIilcblxub25saW5lU2hvcHBlckRhdGEgPC0gZnJlYWQoXCJkYXRhL29ubGluZV9zaG9wcGVyc19pbnRlbnRpb24uY3N2XCIpXG5cbmRhdGFfcHJvY2Vzc2VkIDwtIG9ubGluZVNob3BwZXJEYXRhWywgUmV2ZW51ZSA6PSBhcy5mYWN0b3IoUmV2ZW51ZSldXG5cblxuXG5gYGAifQ== -->
+<pre class="r"><code>#colTypes &lt;- c(&quot;int&quot;, &quot;num&quot;, &quot;int&quot;, &quot;num&quot;, &quot;int&quot;, &quot;num&quot;, 
+#  &quot;num&quot;, &quot;num&quot;, &quot;num&quot;, &quot;num&quot;, &quot;factor&quot;, &quot;int&quot;,
+#  &quot;int&quot;, &quot;int&quot;, &quot;int&quot;, &quot;factor&quot;, &quot;factor&quot;, &quot;factor&quot;)
+
+onlineShopperData &lt;- fread(&quot;data/online_shoppers_intention.csv&quot;)
+
+data_processed &lt;- onlineShopperData[, Revenue := as.factor(Revenue)]
+</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Pre-process the data</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIEZpcnN0IHdlIHRyaW0gdGhlIGNvbHVtbnMgd2UgZG9uJ3QgbmVlZCBhdCBhbGxcbmRhdGFfcHJvY2Vzc2VkIDwtIHN0cmlwVXNlbGVzcyhvbmxpbmVTaG9wcGVyRGF0YSwgYyhcIk9wZXJhdGluZ1N5c3RlbXNcIiwgXG4gICAgICAgICAgICAgICAgICAgIFwiQnJvd3NlclwiLCBcIkFkbWluaXN0cmF0aXZlXCIsIFwiSW5mb3JtYXRpb25hbFwiLCBcbiAgICAgICAgICAgICAgICAgICAgXCJQcm9kdWN0UmVsYXRlZFwiKSlcblxuIyBUaGVuIHdlIGNvbWJpbmUgdGhlIGNvbHVtc24gdGhhdCB3ZSB0aGluayB3ZSBjYW4gY29tYmluZVxuIyBXQVJOSU5HOiBUaGUgZ2VuZXJhbGl6YXRpb24gZm9yIHRoaXMgZnVuY3Rpb24gaXNuJ3Qgc2V0IHVwIHlldCBUT0RPXG5kYXRhX3Byb2Nlc3NlZCA8LSBwcm9wb3J0aW9uYWxpemUob25saW5lU2hvcHBlckRhdGEsIFwiUHJvZHVjdFJlbGF0ZWRfRHVyYXRpb25cIiwgYyhcIkFkbWluaXN0cmF0aXZlX0R1cmF0aW9uXCIsIFwiSW5mb3JtYXRpb25hbF9EdXJhdGlvblwiLCBcIlByb2R1Y3RSZWxhdGVkX0R1cmF0aW9uXCIpKVxuXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIEZpcnN0IHdlIHRyaW0gdGhlIGNvbHVtbnMgd2UgZG9uJ3QgbmVlZCBhdCBhbGxcbiNkYXRhX3Byb2Nlc3NlZCA8LSBzdHJpcFVzZWxlc3MoZGF0YV9wcm9jZXNzZWQsIGMoXCJPcGVyYXRpbmdTeXN0ZW1zXCIsIFxuIyAgICAgICAgICAgICAgICAgICAgXCJCcm93c2VyXCIsIFwiQWRtaW5pc3RyYXRpdmVcIiwgXCJJbmZvcm1hdGlvbmFsXCIsIFxuIyAgICAgICAgICAgICAgICAgICAgXCJQcm9kdWN0UmVsYXRlZFwiKSlcbnVzZWxlc3NDb2x1bW5zIDwtIGMoXCJPcGVyYXRpbmdTeXN0ZW1zXCIsIFxuICAgICAgICAgICAgICAgICAgICBcIkJyb3dzZXJcIiwgXCJBZG1pbmlzdHJhdGl2ZVwiLCBcIkluZm9ybWF0aW9uYWxcIiwgXG4gICAgICAgICAgICAgICAgICAgIFwiUHJvZHVjdFJlbGF0ZWRcIilcblxuZGF0YV9wcm9jZXNzZWRfMiA8LSBkYXRhX3Byb2Nlc3NlZFssIGMoXCJPcGVyYXRpbmdTeXN0ZW1zXCIsIFxuICAgICAgICAgICAgICAgICAgICBcIkJyb3dzZXJcIiwgXCJBZG1pbmlzdHJhdGl2ZVwiLCBcIkluZm9ybWF0aW9uYWxcIiwgXG4gICAgICAgICAgICAgICAgICAgIFwiUHJvZHVjdFJlbGF0ZWRcIikgOj0gTlVMTF1cblxuIyBUaGVuIHdlIGNvbWJpbmUgdGhlIGNvbHVtc24gdGhhdCB3ZSB0aGluayB3ZSBjYW4gY29tYmluZVxuIyBXQVJOSU5HOiBUaGUgZ2VuZXJhbGl6YXRpb24gZm9yIHRoaXMgZnVuY3Rpb24gaXNuJ3Qgc2V0IHVwIHlldCBUT0RPXG5kYXRhX3Byb2Nlc3NlZF8yIDwtIHByb3BvcnRpb25hbGl6ZShkYXRhX3Byb2Nlc3NlZF8yLCBjKFwiUHJvZHVjdFJlbGF0ZWRfRHVyYXRpb25cIixcbiAgICAgICAgICAgICAgICAgICAgIFwiQWRtaW5pc3RyYXRpdmVfRHVyYXRpb25cIiwgXCJJbmZvcm1hdGlvbmFsX0R1cmF0aW9uXCIsIFxuICAgICAgICAgICAgICAgICAgICAgXCJQcm9kdWN0UmVsYXRlZF9EdXJhdGlvblwiKSlcblxuI2RhdGFfcHJvY2Vzc2VkIDwtIGRhdGFfcHJvY2Vzc2VkWywgYyhcbiMgICAgICAgICAgICAgICAgICAgICAgXCJBZG1pbmlzdHJhdGl2ZV9EdXJhdGlvblwiLCBcIkluZm9ybWF0aW9uYWxfRHVyYXRpb25cIiwgXG4jICAgICAgICAgICAgICAgICAgICAgIFwiUHJvZHVjdFJlbGF0ZWRfRHVyYXRpb25cIikgOj0gTlVMTF1cblxuYGBgIn0= -->
 <pre class="r"><code>
 # First we trim the columns we don&#39;t need at all
-data_processed &lt;- stripUseless(onlineShopperData, c(&quot;OperatingSystems&quot;, 
+#data_processed &lt;- stripUseless(data_processed, c(&quot;OperatingSystems&quot;, 
+#                    &quot;Browser&quot;, &quot;Administrative&quot;, &quot;Informational&quot;, 
+#                    &quot;ProductRelated&quot;))
+uselessColumns &lt;- c(&quot;OperatingSystems&quot;, 
                     &quot;Browser&quot;, &quot;Administrative&quot;, &quot;Informational&quot;, 
-                    &quot;ProductRelated&quot;))
+                    &quot;ProductRelated&quot;)
+
+data_processed_2 &lt;- data_processed[, c(&quot;OperatingSystems&quot;, 
+                    &quot;Browser&quot;, &quot;Administrative&quot;, &quot;Informational&quot;, 
+                    &quot;ProductRelated&quot;) := NULL]
 
 # Then we combine the columsn that we think we can combine
 # WARNING: The generalization for this function isn&#39;t set up yet TODO
-data_processed &lt;- proportionalize(onlineShopperData, &quot;ProductRelated_Duration&quot;, c(&quot;Administrative_Duration&quot;, &quot;Informational_Duration&quot;, &quot;ProductRelated_Duration&quot;))
+data_processed_2 &lt;- proportionalize(data_processed_2, c(&quot;ProductRelated_Duration&quot;,
+                     &quot;Administrative_Duration&quot;, &quot;Informational_Duration&quot;, 
+                     &quot;ProductRelated_Duration&quot;))
+
+#data_processed &lt;- data_processed[, c(
+#                      &quot;Administrative_Duration&quot;, &quot;Informational_Duration&quot;, 
+#                      &quot;ProductRelated_Duration&quot;) := NULL]
 </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -1805,8 +1822,85 @@ data_processed &lt;- proportionalize(onlineShopperData, &quot;ProductRelated_Dur
 <p>Build models identical to Sakar, but on our preprocessed version of
 the data We need to try building 1. MultiLayer Perceptron 2. SVM 3.
 Decision Trees</p>
+<p>Initially, we’ll split the data into 70% training set and 30%
+validation, just like in Sakar.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIHNvdXJjZSBmb3IgZXhhbXBsZXMgaHR0cHM6Ly93d3cuci1ibG9nZ2Vycy5jb20vMjAyNC8wOS9ob3ctdG8tc3BsaXQtYS1kYXRhLWZyYW1lLWluLXItYS1jb21wcmVoZW5zaXZlLWd1aWRlLWZvci1iZWdpbm5lcnMvXG5zZXQuc2VlZCgxMjMpXG5cbnNhbXBsZV9zaXplIDwtIGZsb29yKDAuNyAqIG5yb3coZGF0YV9wcm9jZXNzZWRfMikpXG50cmFpbl9pbmRpY2VzIDwtIHNhbXBsZShzZXFfbGVuKG5yb3coZGF0YV9wcm9jZXNzZWRfMikpLCBzaXplID0gc2FtcGxlX3NpemUpXG5cbnRyYWluX2RhdGEgPC0gZGF0YV9wcm9jZXNzZWRfMlt0cmFpbl9pbmRpY2VzLF1cbnRlc3RfZGF0YSA8LSBkYXRhX3Byb2Nlc3NlZF8yWy10cmFpbl9pbmRpY2VzLF1cblxuXG5gYGAifQ== -->
+<pre class="r"><code>
+# source for examples https://www.r-bloggers.com/2024/09/how-to-split-a-data-frame-in-r-a-comprehensive-guide-for-beginners/
+set.seed(123)
+
+sample_size &lt;- floor(0.7 * nrow(data_processed_2))
+train_indices &lt;- sample(seq_len(nrow(data_processed_2)), size = sample_size)
+
+train_data &lt;- data_processed_2[train_indices,]
+test_data &lt;- data_processed_2[-train_indices,]
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol style="list-style-type: decimal">
+<li>Multilayer Perceptron TODO - In Progress</li>
+</ol>
+<p>Define the first mlp TODO - In Progress</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIE1ha2UgYSBzaW1wbGUgbWxwXG5cbm1scDEgPSBrZXJhc19tb2RlbF9zZXF1ZW50aWFsKClcbm1scDEgJT4lXG4gIGxheWVyX2RlbnNlKHVuaXRzPTEwLCBhY3RpdmF0aW9uPSdyZWx1JywgaW5wdXRfc2hhcGUgPSBjKDEyKSlcblxubWxwMSAlPiUgY29tcGlsZShcbiAgbG9zcyA9ICdjYXRlZ29yaWNhbF9jcm9zc2VudHJvcHknLFxuICBvcHRpbWl6ZXIgPSBvcHRpbWl6ZXJfc2dkKCksXG4gIG1ldHJpY3MgPSBjKCdhY2N1cmFjeScpXG4pXG5cbmBgYCJ9 -->
+<pre class="r"><code>
+# Make a simple mlp
+
+mlp1 = keras_model_sequential()
+mlp1 %&gt;%
+  layer_dense(units=10, activation=&#39;relu&#39;, input_shape = c(12))
+
+mlp1 %&gt;% compile(
+  loss = &#39;categorical_crossentropy&#39;,
+  optimizer = optimizer_sgd(),
+  metrics = c(&#39;accuracy&#39;)
+)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Train the first mlp TODO - In Progress</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5tbHAxX2ZpdCA8LSBtbHAxICU+JSBmaXQoXCJSZXZlbnVlXCIsIGRhdGEgPSB0ZXN0X2RhdGEpXG5cbmBgYCJ9 -->
+<pre class="r"><code>
+mlp1_fit &lt;- mlp1 %&gt;% fit(&quot;Revenue&quot;, data = test_data)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="2" style="list-style-type: decimal">
+<li><p>SVM</p></li>
+<li><p>Random Forest</p></li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIyBDbGFzc2lmaWNhdGlvbjpcbnNldC5zZWVkKDcxKVxudHJhaW5fZGF0YS5yZiA8LSByYW5kb21Gb3Jlc3QoUmV2ZW51ZSB+IC4sIGRhdGE9dHJhaW5fZGF0YSwgaW1wb3J0YW5jZT1UUlVFLFxuICAgICAgICAgICAgICAgICAgICAgICAgcHJveGltaXR5PVRSVUUsIG5hLmFjdGlvbiA9IG5hLm9taXQpXG5wcmludCh0cmFpbl9kYXRhLnJmKVxuYGBgIn0= -->
+<pre class="r"><code>
+## Classification:
+set.seed(71)
+train_data.rf &lt;- randomForest(Revenue ~ ., data=train_data, importance=TRUE,
+                        proximity=TRUE, na.action = na.omit)
+print(train_data.rf)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5DYWxsOlxuIHJhbmRvbUZvcmVzdChmb3JtdWxhID0gUmV2ZW51ZSB+IC4sIGRhdGEgPSB0cmFpbl9kYXRhLCBpbXBvcnRhbmNlID0gVFJVRSwgICAgICBwcm94aW1pdHkgPSBUUlVFLCBuYS5hY3Rpb24gPSBuYS5vbWl0KSBcbiAgICAgICAgICAgICAgIFR5cGUgb2YgcmFuZG9tIGZvcmVzdDogY2xhc3NpZmljYXRpb25cbiAgICAgICAgICAgICAgICAgICAgIE51bWJlciBvZiB0cmVlczogNTAwXG5Oby4gb2YgdmFyaWFibGVzIHRyaWVkIGF0IGVhY2ggc3BsaXQ6IDNcblxuICAgICAgICBPT0IgZXN0aW1hdGUgb2YgIGVycm9yIHJhdGU6IDEwLjMxJVxuQ29uZnVzaW9uIG1hdHJpeDpcbiAgICAgIEZBTFNFIFRSVUUgY2xhc3MuZXJyb3JcbkZBTFNFICA2NTIwICAyODggIDAuMDQyMzAzMTdcblRSVUUgICAgNTUxICA3ODIgIDAuNDEzMzUzMzRcbiJ9 -->
+<pre><code>
+Call:
+ randomForest(formula = Revenue ~ ., data = train_data, importance = TRUE,      proximity = TRUE, na.action = na.omit) 
+               Type of random forest: classification
+                     Number of trees: 500
+No. of variables tried at each split: 3
+
+        OOB estimate of  error rate: 10.31%
+Confusion matrix:
+      FALSE TRUE class.error
+FALSE  6520  288  0.04230317
+TRUE    551  782  0.41335334</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Compare results</p>
@@ -1821,7 +1915,7 @@ Decision Trees</p>
 <p>Compare</p>
 <!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkRhdGEgQW5hbHlzaXMiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpJbXBvcnQgbmVjZXNzYXJ5IGxpYnJhcmllcy4NCg0KYGBge3J9DQoNCiMgaW5zdGFsbF9rZXJhcygpIC0gZG9uJ3Qgd2FudCB0byBpbnN0YWxsIGtlcmFzIHVudGlsIHdlJ3ZlIGRldGVybWluZWQNCiMgd2Ugd2FudCB0byB1c2UgaXQgYmVjYXVzZSBrZXJhcyBpcyBxdWl0ZSBsYXJnZS4NCg0KbGlicmFyeShyZWFkcikNCmxpYnJhcnkoZGF0YS50YWJsZSkNCmxpYnJhcnkoVGVybURhdGFBbmFseXNpcykNCiMgbGlicmFyeShrZXJhcykNCg0KDQpgYGANCg0KVGhlbiwgd2UgY2FuIGltcG9ydCB0aGUgZGF0YS4NCg0KYGBge3J9DQpvbmxpbmVTaG9wcGVyRGF0YSA8LSBmcmVhZCgiZGF0YS9vbmxpbmVfc2hvcHBlcnNfaW50ZW50aW9uLmNzdiIpDQpkYXRhX3Byb2Nlc3NlZCA8LSBjb3B5KG9ubGluZVNob3BwZXJEYXRhKQ0KYGBgDQoNCg0KUHJlLXByb2Nlc3MgdGhlIGRhdGENCmBgYHtyfQ0KDQojIEZpcnN0IHdlIHRyaW0gdGhlIGNvbHVtbnMgd2UgZG9uJ3QgbmVlZCBhdCBhbGwNCmRhdGFfcHJvY2Vzc2VkIDwtIHN0cmlwVXNlbGVzcyhvbmxpbmVTaG9wcGVyRGF0YSwgYygiT3BlcmF0aW5nU3lzdGVtcyIsIA0KICAgICAgICAgICAgICAgICAgICAiQnJvd3NlciIsICJBZG1pbmlzdHJhdGl2ZSIsICJJbmZvcm1hdGlvbmFsIiwgDQogICAgICAgICAgICAgICAgICAgICJQcm9kdWN0UmVsYXRlZCIpKQ0KDQojIFRoZW4gd2UgY29tYmluZSB0aGUgY29sdW1zbiB0aGF0IHdlIHRoaW5rIHdlIGNhbiBjb21iaW5lDQojIFdBUk5JTkc6IFRoZSBnZW5lcmFsaXphdGlvbiBmb3IgdGhpcyBmdW5jdGlvbiBpc24ndCBzZXQgdXAgeWV0IFRPRE8NCmRhdGFfcHJvY2Vzc2VkIDwtIHByb3BvcnRpb25hbGl6ZShvbmxpbmVTaG9wcGVyRGF0YSwgIlByb2R1Y3RSZWxhdGVkX0R1cmF0aW9uIiwgDQogICAgICAgICAgICAgICAgICAgIGMoIkFkbWluaXN0cmF0aXZlX0R1cmF0aW9uIiwgIkluZm9ybWF0aW9uYWxfRHVyYXRpb24iLCANCiAgICAgICAgICAgICAgICAgICAgICAiUHJvZHVjdFJlbGF0ZWRfRHVyYXRpb24iKSkNCg0KYGBgDQoNCg0KQnVpbGQgbW9kZWxzIGlkZW50aWNhbCB0byBTYWthciwgYnV0IG9uIG91ciBwcmVwcm9jZXNzZWQgdmVyc2lvbiBvZiB0aGUgZGF0YQ0KV2UgbmVlZCB0byB0cnkgYnVpbGRpbmcgDQoxLiBNdWx0aUxheWVyIFBlcmNlcHRyb24NCjIuIFNWTQ0KMy4gRGVjaXNpb24gVHJlZXMNCmBgYHtyfQ0KDQoNCg0KDQpgYGANCg0KQ29tcGFyZSByZXN1bHRzDQoNClVzZSBvdmVyc2FtcGxpbmcNCg0KUmVjb25zdHJ1Y3QgbW9kZWxzDQoNCkNvbXBhcmUNCg0KSWYgdGltZSB1c2UgU01PVEU/DQoNClJlY29uc3RydWN0IG1vZGVscw0KDQpDb21wYXJlDQoNClNpZ25pZmljYW50bHkgcmVkdWNlIHRoZSBzaXplIG9mIHRoZSB0cmFpbmluZyBzZXQNCg0KUmVidWlsZCB0aGUgbW9kZWxzIA0KDQpDb21wYXJlDQoNCg0K</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkRhdGEgQW5hbHlzaXMiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpJbXBvcnQgbmVjZXNzYXJ5IGxpYnJhcmllcy4NCg0KYGBge3J9DQoNCiMgaW5zdGFsbF9rZXJhcygpIC0gZG9uJ3Qgd2FudCB0byBpbnN0YWxsIGtlcmFzIHVudGlsIHdlJ3ZlIGRldGVybWluZWQNCiMgd2Ugd2FudCB0byB1c2UgaXQgYmVjYXVzZSBrZXJhcyBpcyBxdWl0ZSBsYXJnZS4NCg0KbGlicmFyeShyZWFkcikNCmxpYnJhcnkoZGF0YS50YWJsZSkNCmxpYnJhcnkoVGVybURhdGFBbmFseXNpcykNCmxpYnJhcnkoa2VyYXMpDQpsaWJyYXJ5KHBhcnNuaXApDQpsaWJyYXJ5KHRpZHl2ZXJzZSkNCmxpYnJhcnkobW9kZWxkYXRhKQ0KbGlicmFyeShyYW5kb21Gb3Jlc3QpDQoNCiMgZGV2dG9vbHM6Omluc3RhbGxfZ2l0aHViKCJyc3R1ZGlvL3RlbnNvcmZsb3ciKQ0KDQpgYGANCg0KVGhlbiwgd2UgY2FuIGltcG9ydCB0aGUgZGF0YS4NCg0KYGBge3J9DQojY29sVHlwZXMgPC0gYygiaW50IiwgIm51bSIsICJpbnQiLCAibnVtIiwgImludCIsICJudW0iLCANCiMgICJudW0iLCAibnVtIiwgIm51bSIsICJudW0iLCAiZmFjdG9yIiwgImludCIsDQojICAiaW50IiwgImludCIsICJpbnQiLCAiZmFjdG9yIiwgImZhY3RvciIsICJmYWN0b3IiKQ0KDQpvbmxpbmVTaG9wcGVyRGF0YSA8LSBmcmVhZCgiZGF0YS9vbmxpbmVfc2hvcHBlcnNfaW50ZW50aW9uLmNzdiIpDQoNCmRhdGFfcHJvY2Vzc2VkIDwtIG9ubGluZVNob3BwZXJEYXRhWywgUmV2ZW51ZSA6PSBhcy5mYWN0b3IoUmV2ZW51ZSldDQoNCg0KDQpgYGANCg0KDQpQcmUtcHJvY2VzcyB0aGUgZGF0YQ0KYGBge3J9DQoNCiMgRmlyc3Qgd2UgdHJpbSB0aGUgY29sdW1ucyB3ZSBkb24ndCBuZWVkIGF0IGFsbA0KI2RhdGFfcHJvY2Vzc2VkIDwtIHN0cmlwVXNlbGVzcyhkYXRhX3Byb2Nlc3NlZCwgYygiT3BlcmF0aW5nU3lzdGVtcyIsIA0KIyAgICAgICAgICAgICAgICAgICAgIkJyb3dzZXIiLCAiQWRtaW5pc3RyYXRpdmUiLCAiSW5mb3JtYXRpb25hbCIsIA0KIyAgICAgICAgICAgICAgICAgICAgIlByb2R1Y3RSZWxhdGVkIikpDQp1c2VsZXNzQ29sdW1ucyA8LSBjKCJPcGVyYXRpbmdTeXN0ZW1zIiwgDQogICAgICAgICAgICAgICAgICAgICJCcm93c2VyIiwgIkFkbWluaXN0cmF0aXZlIiwgIkluZm9ybWF0aW9uYWwiLCANCiAgICAgICAgICAgICAgICAgICAgIlByb2R1Y3RSZWxhdGVkIikNCg0KZGF0YV9wcm9jZXNzZWRfMiA8LSBkYXRhX3Byb2Nlc3NlZFssIGMoIk9wZXJhdGluZ1N5c3RlbXMiLCANCiAgICAgICAgICAgICAgICAgICAgIkJyb3dzZXIiLCAiQWRtaW5pc3RyYXRpdmUiLCAiSW5mb3JtYXRpb25hbCIsIA0KICAgICAgICAgICAgICAgICAgICAiUHJvZHVjdFJlbGF0ZWQiKSA6PSBOVUxMXQ0KDQojIFRoZW4gd2UgY29tYmluZSB0aGUgY29sdW1zbiB0aGF0IHdlIHRoaW5rIHdlIGNhbiBjb21iaW5lDQojIFdBUk5JTkc6IFRoZSBnZW5lcmFsaXphdGlvbiBmb3IgdGhpcyBmdW5jdGlvbiBpc24ndCBzZXQgdXAgeWV0IFRPRE8NCmRhdGFfcHJvY2Vzc2VkXzIgPC0gcHJvcG9ydGlvbmFsaXplKGRhdGFfcHJvY2Vzc2VkXzIsIGMoIlByb2R1Y3RSZWxhdGVkX0R1cmF0aW9uIiwNCiAgICAgICAgICAgICAgICAgICAgICJBZG1pbmlzdHJhdGl2ZV9EdXJhdGlvbiIsICJJbmZvcm1hdGlvbmFsX0R1cmF0aW9uIiwgDQogICAgICAgICAgICAgICAgICAgICAiUHJvZHVjdFJlbGF0ZWRfRHVyYXRpb24iKSkNCg0KZGF0YV9wcm9jZXNzZWRfMiA8LSBkYXRhX3Byb2Nlc3NlZF8yWywgYygNCiAgICAgICAgICAgICAgICAgICAgICAiQWRtaW5pc3RyYXRpdmVfRHVyYXRpb24iLCAiSW5mb3JtYXRpb25hbF9EdXJhdGlvbiIsIA0KICAgICAgICAgICAgICAgICAgICAgICJQcm9kdWN0UmVsYXRlZF9EdXJhdGlvbiIpIDo9IE5VTExdDQoNCmBgYA0KDQoNCkJ1aWxkIG1vZGVscyBpZGVudGljYWwgdG8gU2FrYXIsIGJ1dCBvbiBvdXIgcHJlcHJvY2Vzc2VkIHZlcnNpb24gb2YgdGhlIGRhdGENCldlIG5lZWQgdG8gdHJ5IGJ1aWxkaW5nIA0KMS4gTXVsdGlMYXllciBQZXJjZXB0cm9uDQoyLiBTVk0NCjMuIERlY2lzaW9uIFRyZWVzDQoNCkluaXRpYWxseSwgd2UnbGwgc3BsaXQgdGhlIGRhdGEgaW50byA3MCUgdHJhaW5pbmcgc2V0IGFuZCAzMCUgdmFsaWRhdGlvbiwganVzdCBsaWtlDQppbiBTYWthci4NCg0KYGBge3J9DQoNCiMgc291cmNlIGZvciBleGFtcGxlcyBodHRwczovL3d3dy5yLWJsb2dnZXJzLmNvbS8yMDI0LzA5L2hvdy10by1zcGxpdC1hLWRhdGEtZnJhbWUtaW4tci1hLWNvbXByZWhlbnNpdmUtZ3VpZGUtZm9yLWJlZ2lubmVycy8NCnNldC5zZWVkKDEyMykNCg0Kc2FtcGxlX3NpemUgPC0gZmxvb3IoMC43ICogbnJvdyhkYXRhX3Byb2Nlc3NlZF8yKSkNCnRyYWluX2luZGljZXMgPC0gc2FtcGxlKHNlcV9sZW4obnJvdyhkYXRhX3Byb2Nlc3NlZF8yKSksIHNpemUgPSBzYW1wbGVfc2l6ZSkNCg0KdHJhaW5fZGF0YSA8LSBkYXRhX3Byb2Nlc3NlZF8yW3RyYWluX2luZGljZXMsXQ0KdGVzdF9kYXRhIDwtIGRhdGFfcHJvY2Vzc2VkXzJbLXRyYWluX2luZGljZXMsXQ0KDQoNCmBgYA0KDQoNCjEuIE11bHRpbGF5ZXIgUGVyY2VwdHJvbg0KVE9ETyAtIEluIFByb2dyZXNzDQoNCkRlZmluZSB0aGUgZmlyc3QgbWxwDQpUT0RPIC0gSW4gUHJvZ3Jlc3MNCmBgYHtyfQ0KDQojIE1ha2UgYSBzaW1wbGUgbWxwDQoNCm1scDEgPSBrZXJhc19tb2RlbF9zZXF1ZW50aWFsKCkNCm1scDEgJT4lDQogIGxheWVyX2RlbnNlKHVuaXRzPTEwLCBhY3RpdmF0aW9uPSdyZWx1JywgaW5wdXRfc2hhcGUgPSBjKDEyKSkNCg0KbWxwMSAlPiUgY29tcGlsZSgNCiAgbG9zcyA9ICdjYXRlZ29yaWNhbF9jcm9zc2VudHJvcHknLA0KICBvcHRpbWl6ZXIgPSBvcHRpbWl6ZXJfc2dkKCksDQogIG1ldHJpY3MgPSBjKCdhY2N1cmFjeScpDQopDQoNCmBgYA0KDQpUcmFpbiB0aGUgZmlyc3QgbWxwDQpUT0RPIC0gSW4gUHJvZ3Jlc3MNCmBgYHtyfQ0KDQptbHAxX2ZpdCA8LSBtbHAxICU+JSBmaXQoIlJldmVudWUiLCBkYXRhID0gdGVzdF9kYXRhKQ0KDQpgYGANCg0KMi4gU1ZNDQoNCjMuIFJhbmRvbSBGb3Jlc3QNCmBgYHtyfQ0KDQojIyBDbGFzc2lmaWNhdGlvbjoNCnNldC5zZWVkKDcxKQ0KdHJhaW5fZGF0YS5yZiA8LSByYW5kb21Gb3Jlc3QoUmV2ZW51ZSB+IC4sIGRhdGE9dHJhaW5fZGF0YSwgaW1wb3J0YW5jZT1UUlVFLA0KICAgICAgICAgICAgICAgICAgICAgICAgcHJveGltaXR5PVRSVUUsIG5hLmFjdGlvbiA9IG5hLm9taXQpDQpwcmludCh0cmFpbl9kYXRhLnJmKQ0KDQpgYGANCg0KDQpDb21wYXJlIHJlc3VsdHMNCg0KVXNlIG92ZXJzYW1wbGluZw0KDQpSZWNvbnN0cnVjdCBtb2RlbHMNCg0KQ29tcGFyZQ0KDQpJZiB0aW1lIHVzZSBTTU9URT8NCg0KUmVjb25zdHJ1Y3QgbW9kZWxzDQoNCkNvbXBhcmUNCg0KU2lnbmlmaWNhbnRseSByZWR1Y2UgdGhlIHNpemUgb2YgdGhlIHRyYWluaW5nIHNldA0KDQpSZWJ1aWxkIHRoZSBtb2RlbHMgDQoNCkNvbXBhcmUNCg0KDQo=</div>
 
 
 
