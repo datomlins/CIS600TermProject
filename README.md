@@ -7,3 +7,7 @@ order to perform the analysis istself.
 
 To be able to use development tools for documentation, etc., be sure to install
 devtools and roxygen2.
+
+Before running this package, ensure you have tensorflow installed per 
+https://www.tensorflow.org/install/pip. Ensure you have the correct version of
+python installed.
