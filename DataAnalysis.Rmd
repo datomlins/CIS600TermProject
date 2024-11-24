@@ -18,6 +18,7 @@ library(parsnip)
 library(tidyverse)
 library(modeldata)
 library(randomForest)
+library(e1071)
 
 # devtools::install_github("rstudio/tensorflow")
 
@@ -121,6 +122,20 @@ mlp1_fit <- mlp1 %>% fit("Revenue", data = test_data)
 ```
 
 2. SVM
+```{r}
+
+## classification mode
+# default with factor response:
+svm_model <- svm(Revenue ~ ., data = train_data)
+
+print(svm_model)
+summary(svm_model)
+
+# test with train data
+pred <- predict(svm_model, train_data)
+
+
+```
 
 3. Random Forest
 ```{r}
@@ -132,6 +147,11 @@ train_data.rf <- randomForest(Revenue ~ ., data=train_data, importance=TRUE,
 print(train_data.rf)
 
 ```
+
+```{r}
+predict(train_data.rf, test_data)
+```
+
 
 
 Compare results
