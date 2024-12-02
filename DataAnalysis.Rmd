@@ -18,12 +18,13 @@ Import necessary libraries.
 library(readr)
 library(data.table)
 library(TermDataAnalysis)
-library(keras)
+library(keras3)
 library(parsnip)
 library(tidyverse)
 library(modeldata)
 library(randomForest)
 library(e1071)
+library(tensorflow)
 
 # devtools::install_github("rstudio/tensorflow")
 
@@ -44,6 +45,8 @@ data_processed <- onlineShopperData[, Revenue := as.factor(Revenue)]
 
 ```
 
+Pre-process the data
+
 ```{r}
 
 data_processed <- data_processed[, total_Duration := Administrative_Duration + Informational_Duration + ProductRelated_Duration]
@@ -54,34 +57,6 @@ data_processed <- data_processed[, c("OperatingSystems",
                     "Browser", "Administrative", "Informational", 
                     "ProductRelated", "Administrative_Duration", 
                     "Informational_Duration", "ProductRelated_Duration") := NULL]
-
-```
-
-Pre-process the data
-
-```{r}
-
-# First we trim the columns we don't need at all
-#data_processed <- stripUseless(data_processed, c("OperatingSystems", 
-#                    "Browser", "Administrative", "Informational", 
-#                    "ProductRelated"))
-uselessColumns <- c("OperatingSystems", 
-                    "Browser", "Administrative", "Informational", 
-                    "ProductRelated")
-
-data_processed_2 <- data_processed[, c("OperatingSystems", 
-                    "Browser", "Administrative", "Informational", 
-                    "ProductRelated") := NULL]
-
-# Then we combine the columsn that we think we can combine
-# WARNING: The generalization for this function isn't set up yet TODO
-data_processed_2 <- proportionalize(data_processed_2, c("ProductRelated_Duration",
-                     "Administrative_Duration", "Informational_Duration", 
-                     "ProductRelated_Duration"))
-
-data_processed_2 <- data_processed_2[, c(
-                      "Administrative_Duration", "Informational_Duration", 
-                      "ProductRelated_Duration") := NULL]
 
 ```
 
@@ -97,11 +72,11 @@ validation, just like in Sakar.
 # source for examples https://www.r-bloggers.com/2024/09/how-to-split-a-data-frame-in-r-a-comprehensive-guide-for-beginners/
 set.seed(123)
 
-sample_size <- floor(0.7 * nrow(data_processed_2))
-train_indices <- sample(seq_len(nrow(data_processed_2)), size = sample_size)
+sample_size <- floor(0.7 * nrow(data_processed))
+train_indices <- sample(seq_len(nrow(data_processed)), size = sample_size)
 
-train_data <- data_processed_2[train_indices,]
-test_data <- data_processed_2[-train_indices,]
+train_data <- data_processed[train_indices,]
+test_data <- data_processed[-train_indices,]
 
 
 ```
@@ -116,7 +91,7 @@ Define the first mlp TODO - In Progress
 
 mlp1 = keras_model_sequential()
 mlp1 %>%
-  layer_dense(units=10, activation='relu')
+  layer_dense(units=10, activation='relu', input_shape = c(11))
 
 mlp1 %>% compile(
   loss = 'categorical_crossentropy',
