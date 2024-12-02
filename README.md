@@ -10,4 +10,4 @@ devtools and roxygen2.
 
 Before running this package, ensure you have tensorflow installed per 
 https://www.tensorflow.org/install/pip. Ensure you have the correct version of
-python installed.
+python (3.12.0) installed.
