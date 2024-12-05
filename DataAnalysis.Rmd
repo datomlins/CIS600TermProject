@@ -101,11 +101,30 @@ mlp1 %>% compile(
 
 ```
 
+Shape the data for use in the MLP.
+
+```{r}
+
+train_x_dt <- train_data[,c("BounceRates", "ExitRates", "PageValues", "SpecialDay", "Month", "Region", "TrafficType", "VisitorType", "Weekend", "total_Duration", "proportion_of_duration")]
+
+train_y_dt <- train_data[,"Revenue"]
+
+train_x <- array(data = c(unlist(train_x_dt)), dim = c(nrow(train_x_dt), 11), dimnames = list(rownames(train_x_dt), colnames(train_x_dt)))
+
+train_x <- as.matrix(train_x_dt)
+train_y <- as.matrix(train_data[,"Revenue"])
+
+# train_x <- array_reshape(train_x, c(nrow(train_x), 11))
+# x_test <- array_reshape(train_y, c(nrow(x_test), 784))
+
+```
+
 Train the first mlp TODO - In Progress
 
 ```{r}
 
-mlp1_fit <- mlp1 %>% fit("Revenue", data = test_data)
+mlp1_fit <- mlp1 %>% fit(train_x, train_y, epochs = 30, batch_size = 128, 
+  validation_split = 0.2)
 
 ```
 
@@ -139,7 +158,7 @@ print(train_data.rf)
 ```
 
 ```{r}
-predict(train_data.rf, test_data)
+predict(train_data.rf, test_data) # compare to test_data$Revenue
 ```
 
 Compare results
