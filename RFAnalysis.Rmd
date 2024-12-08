@@ -1,0 +1,114 @@
+---
+title: "RFAnalysis"
+html_document:
+    df_print: paged
+editor_options: 
+  markdown: 
+    wrap: 72
+date: "2024-12-08"
+---
+#Import necessary libraries.
+```{r}
+library(data.table)
+library(randomForest)
+library(caret)
+library(ggplot2)
+```
+# Load data
+```{r}
+onlineShopperData <- fread("data/online_shoppers_intention.csv")
+```
+# Data Preprocessing
+```{r}
+data_processed <- onlineShopperData[, Revenue := as.factor(Revenue)]
+data_processed <- data_processed[, total_Duration := Administrative_Duration + Informational_Duration + ProductRelated_Duration]
+data_processed <- data_processed[, proportion_of_duration := ProductRelated_Duration / total_Duration]
+data_processed <- data_processed[, c("OperatingSystems", 
+                                     "Browser", "Administrative", "Informational", 
+                                     "ProductRelated", "Administrative_Duration", 
+                                     "Informational_Duration", "ProductRelated_Duration") := NULL]
+```
+# Replace Missing Values with 1
+```{r}
+data_processed[is.na(data_processed)] <- 0
+```
+# Splitting the dataset
+```{r}
+set.seed(123)
+sample_size <- floor(0.7 * nrow(data_processed))
+train_indices <- sample(seq_len(nrow(data_processed)), size = sample_size)
+train_data <- data_processed[train_indices, ]
+test_data <- data_processed[-train_indices, ]
+```
+# Define ntree and mtry combinations
+```{r}
+ntree_values <- c(5000,100)
+mtry_values <- c(3,2)
+```
+# Initialize results dataframe
+```{r}
+results <- data.frame(
+  ntree = numeric(),
+  mtry = numeric(),
+  Accuracy = numeric(),
+  TPR = numeric(),
+  TNR = numeric(),
+  F1_Score = numeric()
+)
+
+set.seed(71)
+for (ntree in ntree_values) {
+  for (mtry in mtry_values) {
+    # Train Random Forest model
+    rf_model <- randomForest(
+      Revenue ~ .,
+      data = train_data,
+      ntree = ntree,
+      mtry = mtry,
+      importance = TRUE
+    )
+    
+    # Predict on test data
+    predictions <- predict(rf_model, test_data)
+    cm <- confusionMatrix(predictions, test_data$Revenue)
+    
+    # Extract confusion matrix metrics
+    tp <- cm$table[2, 2]  # True Positives
+    tn <- cm$table[1, 1]  # True Negatives
+    fp <- cm$table[1, 2]  # False Positives
+    fn <- cm$table[2, 1]  # False Negatives
+    
+    # Calculate metrics
+    accuracy <- cm$overall['Accuracy']
+    tpr <- tp / (tp + fn)  # True Positive Rate
+    tnr <- tn / (tn + fp)  # True Negative Rate
+    precision <- tp / (tp + fp)
+    recall <- tpr  # Recall is the same as TPR
+    f1_score <- 2 * (precision * recall) / (precision + recall)
+    
+    # Store results
+    results <- rbind(
+      results,
+      data.frame(ntree = ntree, mtry = mtry, Accuracy = accuracy, TPR = tpr, TNR = tnr, F1_Score = f1_score)
+    )
+  }
+}
+```
+# Print results
+```{r}
+print(results)
+```
+# Plot results
+```{r}
+results_long <- reshape2::melt(results, id.vars = c("ntree", "mtry"))
+
+ggplot(results_long, aes(x = interaction(ntree, mtry), y = value, fill = variable)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(
+    title = "Performance Metrics for Random Forest",
+    x = "Combination of ntree and mtry",
+    y = "Metric Value",
+    fill = "Metric"
+  ) +
+  theme_minimal()
+```
