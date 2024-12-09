@@ -12,7 +12,7 @@ date: "2024-12-07"
 library(data.table)
 library(e1071)
 library(caret)
-library(smotefamily)
+library(ROSE)
 ```
 # Load data
 ```{r}
@@ -21,6 +21,12 @@ onlineShopperData <- fread("data/online_shoppers_intention.csv")
 # Data Preprocessing
 ```{r}
 data_processed <- onlineShopperData[, Revenue := as.factor(Revenue)]
+data_processed <- data_processed[, Month := as.factor(Month)]
+data_processed <- data_processed[, VisitorType := as.factor(VisitorType)]
+data_processed <- data_processed[, TrafficType := as.factor(TrafficType)]
+data_processed <- data_processed[, Region := as.factor(Region)]
+data_processed <- data_processed[, Weekend := as.factor(Weekend)]
+
 data_processed <- data_processed[, total_Duration := Administrative_Duration + Informational_Duration + ProductRelated_Duration]
 data_processed <- data_processed[, proportion_of_duration := ProductRelated_Duration / total_Duration]
 data_processed <- data_processed[, c("OperatingSystems", 
@@ -36,19 +42,12 @@ data_processed[is.na(data_processed)] <- 0
 # Splitting the dataset
 ```{r}
 set.seed(123)
-sample_size <- floor(0.7 * nrow(data_processed))
+sample_size <- floor(0.3 * nrow(data_processed))
 train_indices <- sample(seq_len(nrow(data_processed)), size = sample_size)
 train_data <- data_processed[train_indices, ]
 test_data <- data_processed[-train_indices, ]
 ```
 
-
-#Oversampling dataset
-```{r}
-
-train_data <- SMOTE(train_data, train_data$Revenue)
-
-```
 
 # Initialize results dataframe
 ```{r}
@@ -60,6 +59,13 @@ results <- data.frame(
 )
 
 set.seed(71)
+```
+
+#Oversampling dataset
+```{r}
+
+train_data <- ROSE(Revenue ~ ., data=train_data,)$data
+
 ```
 
 ```{r}
